@@ -7,7 +7,7 @@ import androidx.security.crypto.MasterKey
 import com.yavs.swapify.utils.Platform
 
 
-class TokenManager() {
+class TokenManager {
     companion object{
         const val OAUTH_TOKEN = "oauth_token"
     }

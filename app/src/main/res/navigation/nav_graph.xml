@@ -5,10 +5,15 @@
             app:startDestination="@id/swapFragment">
 
     <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.SwapFragment" android:label="fragment_swap"
-              tools:layout="@layout/fragment_swap"/>
+              tools:layout="@layout/fragment_swap">
+        <action android:id="@+id/action_swapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
+    </fragment>
 
     <activity android:id="@+id/mainActivity" android:name="com.yavs.swapify.MainActivity" android:label="activity_main"
               tools:layout="@layout/activity_main"/>
     <fragment android:id="@+id/settingsFragment" android:name="com.yavs.swapify.SettingsFragment"
-              android:label="fragment_settings" tools:layout="@layout/fragment_settings"/>
+              android:label="fragment_settings" tools:layout="@layout/fragment_settings">
+        <deepLink app:uri="yavs.swapify" app:action="android.intent.action.VIEW" app:mimeType="application/json"/>
+        <action android:id="@+id/action_settingsFragment_to_swapFragment" app:destination="@id/swapFragment"/>
+    </fragment>
 </navigation>
