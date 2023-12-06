@@ -71,7 +71,6 @@ class DeezerService : PlatformService {
     }
 
     override fun getOAuthToken(code: String): String {
-
         try {
             val req = Request.Builder().url("https://connect.deezer.com/oauth/access_token.php?app_id=$APP_ID&secret=$SECRET&code=$code").build()
             val call: Call = http.newCall(req)
