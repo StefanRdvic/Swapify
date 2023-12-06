@@ -69,5 +69,17 @@ class TokenManager {
         }
     }
 
-
+    fun getAll(context: Context): MutableMap<String, *>? {
+        val masterKeyAlias = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+        val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+            context,
+            OAUTH_TOKEN,
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.all
+    }
 }

@@ -11,21 +11,20 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-
-class DeezerService : PlatformService {
+class SpotifyService : PlatformService {
 
     private val http = OkHttpClient()
     private val json = Json { ignoreUnknownKeys = true }
 
     companion object{
-        const val APP_ID: Long = 649821
-        const val SECRET: String = "48e934960b566e8d508497542ba01205"
+        const val CLIENT_ID: String = "a338c974499c4b21a1d151969fa907b4"
         const val REDIRECT_URL: String = "http://yavs.swapify/connect"
-        const val BASE_URL = "https://api.deezer.com"
+        const val SCOPE: String = "user-read-private"
+        const val BASE_URL = "https://api.spotify.com"
     }
 
     override fun getUser(token: String?): Result<User> {
-         val req = Request.Builder().url("$BASE_URL/user/me?access_token=$token").build()
+        val req = Request.Builder().url("$BASE_URL/user/me?access_token=$token").build()
         val call: Call = http.newCall(req)
         val response: Response = call.execute()
         if (response.code==200){
@@ -36,44 +35,29 @@ class DeezerService : PlatformService {
         return Result.failure(Exception("No user found"))
     }
 
-
     override fun getTrack(trackId: Long): Track {
-        val req = Request.Builder().url("$BASE_URL/track?q=$trackId").build()
-        val call: Call = http.newCall(req)
-        val response: Response = call.execute()
-        return json.decodeFromString<Track>(response.body!!.string())
+        TODO("Not yet implemented")
     }
 
-
     override fun getArtist(artistId: Long): Artist {
-        val req = Request.Builder().url("$BASE_URL/artist?q=$artistId").build()
-        val call: Call = http.newCall(req)
-        val response: Response = call.execute()
-        return json.decodeFromString<Artist>(response.body!!.string())
+        TODO("Not yet implemented")
     }
 
     override fun getPlaylists(token: String): List<Playlist> {
-        val req = Request.Builder().url("$BASE_URL/user/me/playlist?access_token=$token").build()
-        val call: Call = http.newCall(req)
-        val response: Response = call.execute()
-        return json.decodeFromString<List<Playlist>>(response.body!!.string())
+        TODO("Not yet implemented")
     }
 
     override fun searchTrack(title: String, artist: String): List<Track> {
-        val req = Request.Builder().url("$BASE_URL/search?q=artist:\"$artist\" track:\"$title\"").build()
-        val call: Call = http.newCall(req)
-        val response: Response = call.execute()
-        return json.decodeFromString<List<Track>>(response.body!!.string())
+        TODO("Not yet implemented")
     }
 
     override fun getOAuthUrl(): String {
-        return "https://connect.deezer.com/oauth/auth.php?app_id=$APP_ID&redirect_uri=$REDIRECT_URL&perms=basic_access,manage_library,offline_access"
+        return "https://connect.deezer.com/oauth/auth.php?app_id=$CLIENT_ID&redirect_uri=$REDIRECT_URL&perms=basic_access,manage_library,offline_access"
     }
 
     override fun getOAuthToken(code: String): String {
-
         try {
-            val req = Request.Builder().url("https://connect.deezer.com/oauth/access_token.php?app_id=$APP_ID&secret=$SECRET&code=$code").build()
+            val req = Request.Builder().url("https://accounts.spotify.com/authorize?client_id=$CLIENT_ID&response_type=code&redirect_uri=$REDIRECT_URL&scope=$SCOPE").build()
             val call: Call = http.newCall(req)
             val response: Response = call.execute()
             val r = response.body?.string()

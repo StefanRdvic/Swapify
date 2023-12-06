@@ -1,4 +1,4 @@
-package com.yavs.swapify
+package com.yavs.swapify.ui.settings
 
 import android.content.Context
 import android.util.Log
@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val tokenManager: TokenManager) : ViewModel() {
+class SettingsViewModel(private val tokenManager: TokenManager) : ViewModel() {
     private val job = SupervisorJob()
     private val mainViewScope = CoroutineScope(Dispatchers.IO + job)
 
@@ -24,7 +24,7 @@ class MainViewModel(private val tokenManager: TokenManager) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                MainViewModel(
+                SettingsViewModel(
                     TokenManager()
                 )
             }
@@ -55,7 +55,7 @@ class MainViewModel(private val tokenManager: TokenManager) : ViewModel() {
             val token = tokenManager.getToken(context,platform)
             try {
                 val result = PlatformManager.getService(platform).getUser(token)
-                result.getOrNull()?.let { accounts.add(it) }
+                accounts.add(result.getOrThrow())
             } catch (e: Exception) {
                 Log.d("error connecting to api", e.toString())
                 accounts.add(User(platform= platform))

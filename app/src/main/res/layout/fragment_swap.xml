@@ -4,11 +4,11 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".SwapFragment">
-    <TextView
-            android:text="@string/swap_playlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="204dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="325dp"/>
+                                                   tools:context=".ui.swap.SwapFragment">
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="60dp" android:id="@+id/platformSelect"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

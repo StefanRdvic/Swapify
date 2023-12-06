@@ -1,4 +1,4 @@
-package com.yavs.swapify.ui.user
+package com.yavs.swapify.ui.settings
 
 import android.content.Context
 import android.content.Intent
@@ -43,8 +43,7 @@ class UserAdapter(
             }
             2 -> {
                 val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.recycler_connection, parent, false)
-                val c = ConnectViewHolder(adapterLayout)
-                c
+                ConnectViewHolder(adapterLayout)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }

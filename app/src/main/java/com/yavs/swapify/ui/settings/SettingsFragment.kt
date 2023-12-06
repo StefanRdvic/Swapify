@@ -1,4 +1,4 @@
-package com.yavs.swapify
+package com.yavs.swapify.ui.settings
 
 import android.net.Uri
 import android.os.Bundle
@@ -10,14 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.yavs.swapify.R
 import com.yavs.swapify.auth.TokenManager
 import com.yavs.swapify.model.User
 import com.yavs.swapify.service.DeezerService
-import com.yavs.swapify.ui.user.UserAdapter
 import com.yavs.swapify.utils.Platform
 
 class SettingsFragment : Fragment() {
-    private val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
+    private val viewModel: SettingsViewModel by viewModels { SettingsViewModel.Factory }
     private val tokenManager = TokenManager()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)

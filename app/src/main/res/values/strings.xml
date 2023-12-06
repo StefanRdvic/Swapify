@@ -8,4 +8,6 @@
     <string name="connect_to">Connect to %1$s</string>
     <string name="userFullName">%1$s %2$s</string>
     <string name="pfp">PFP</string>
+    <string name="playlistImage">PlalistImage</string>
+    <string name="tracks">%1$s tracks</string>
 </resources>
