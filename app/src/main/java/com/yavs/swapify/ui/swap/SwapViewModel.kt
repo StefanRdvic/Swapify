@@ -10,28 +10,29 @@ import com.yavs.swapify.ui.settings.SettingsViewModel
 import com.yavs.swapify.utils.Platform
 
 class SwapViewModel(private val tokenManager: TokenManager) : ViewModel() {
-    private var tokens : MutableMap<String, String>? = mutableMapOf<String, String>()
-    var availablePlateforms = mutableListOf<Platform>()
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                SettingsViewModel(
-                    TokenManager()
-                )
-            }
-        }
-    }
-
-    fun setTokens(context: Context){
-        tokens = tokenManager.getAll(context) as MutableMap<String, String>?
-        availablePlateforms = mutableListOf()
-        for (platform in Platform.entries){
-            val token = tokens!![platform.accountName]
-            if (token != null){
-                availablePlateforms.add(platform)
-            }
-        }
-    }
+//    private var tokens : MutableMap<String, String>? = mutableMapOf<String, String>()
+//    var availablePlateforms = mutableListOf<Platform>()
+//
+//    companion object {
+//        val Factory: ViewModelProvider.Factory = viewModelFactory {
+//            initializer {
+//                SettingsViewModel(
+//                    TokenManager()
+//                )
+//            }
+//        }
+//    }
+//
+//    fun setTokens(context: Context){
+//        tokens = tokenManager.getAll(context) as MutableMap<String, String>?
+//        availablePlateforms = mutableListOf()
+//        for (platform in Platform.entries){
+//            val token = tokens!![platform.accountName]
+//            if (token != null){
+//                availablePlateforms.add(platform)
+//            }
+//        }
+//    }
 
 
 }

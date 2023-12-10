@@ -10,8 +10,9 @@ import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
 
-class SpotifyService : PlatformService {
+class SpotifyService @Inject constructor() : PlatformService {
 
     private val http = OkHttpClient()
     private val json = Json { ignoreUnknownKeys = true }
@@ -55,7 +56,7 @@ class SpotifyService : PlatformService {
         return "https://connect.deezer.com/oauth/auth.php?app_id=$CLIENT_ID&redirect_uri=$REDIRECT_URL&perms=basic_access,manage_library,offline_access"
     }
 
-    override fun getOAuthToken(code: String): String {
+    override suspend fun getOAuthToken(code: String): String {
         try {
             val req = Request.Builder().url("https://accounts.spotify.com/authorize?client_id=$CLIENT_ID&response_type=code&redirect_uri=$REDIRECT_URL&scope=$SCOPE").build()
             val call: Call = http.newCall(req)

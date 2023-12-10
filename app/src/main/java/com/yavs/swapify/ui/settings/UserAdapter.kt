@@ -69,6 +69,7 @@ class UserAdapter(
                 val plat = accounts[position].platform
                 holder.connect.text = context.getString(R.string.connect_to, plat)
                 holder.connect.setOnClickListener {
+
                     val url = PlatformManager.getService(plat!!).getOAuthUrl()
                     val browse = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     context.startActivity(browse)

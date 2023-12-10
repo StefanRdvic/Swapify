@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("androidx.navigation.safeargs")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -42,6 +45,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.5")
@@ -53,9 +57,18 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.browser:browser:1.5.0")
+    implementation("androidx.browser:browser:1.7.0")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.android.volley:volley:1.2.1")
+    implementation ("com.google.dagger:dagger:2.49")
+    ksp("com.google.dagger:dagger-compiler:2.49")
+
+    implementation("com.google.dagger:hilt-android:2.49")
+    ksp("com.google.dagger:hilt-android-compiler:2.49")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

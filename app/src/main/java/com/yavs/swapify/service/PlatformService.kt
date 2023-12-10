@@ -4,6 +4,7 @@ import com.yavs.swapify.model.Artist
 import com.yavs.swapify.model.Playlist
 import com.yavs.swapify.model.Track
 import com.yavs.swapify.model.User
+import retrofit2.Retrofit
 
 interface PlatformService {
     fun getUser(token:String?): Result<User>
@@ -12,5 +13,5 @@ interface PlatformService {
     fun getPlaylists(token: String): List<Playlist>
     fun searchTrack(title: String, artist: String): List<Track>
     fun getOAuthUrl(): String
-    fun getOAuthToken(code: String): String
+    suspend fun getOAuthToken(code: String): String
 }
