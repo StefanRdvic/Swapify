@@ -1,15 +1,15 @@
-package com.yavs.swapify.ui.swap
+//package com.yavs.swapify.ui.swap
+//
+//import android.content.Context
+//import androidx.lifecycle.ViewModel
+//import androidx.lifecycle.ViewModelProvider
+//import androidx.lifecycle.viewmodel.initializer
+//import androidx.lifecycle.viewmodel.viewModelFactory
+//import com.yavs.swapify.auth.TokenManager
+//import com.yavs.swapify.ui.settings.SettingsViewModel
+//import com.yavs.swapify.utils.Platform
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.yavs.swapify.auth.TokenManager
-import com.yavs.swapify.ui.settings.SettingsViewModel
-import com.yavs.swapify.utils.Platform
-
-class SwapViewModel(private val tokenManager: TokenManager) : ViewModel() {
+//class SwapViewModel(private val tokenManager: TokenManager) : ViewModel() {
 //    private var tokens : MutableMap<String, String>? = mutableMapOf<String, String>()
 //    var availablePlateforms = mutableListOf<Platform>()
 //
@@ -35,4 +35,4 @@ class SwapViewModel(private val tokenManager: TokenManager) : ViewModel() {
 //    }
 
 
-}
+//}

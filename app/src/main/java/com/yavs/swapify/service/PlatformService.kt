@@ -1,10 +1,9 @@
 package com.yavs.swapify.service
 
-import com.yavs.swapify.model.Artist
-import com.yavs.swapify.model.Playlist
-import com.yavs.swapify.model.Track
-import com.yavs.swapify.model.User
-import retrofit2.Retrofit
+import com.yavs.swapify.data.model.Artist
+import com.yavs.swapify.data.model.Playlist
+import com.yavs.swapify.data.model.Track
+import com.yavs.swapify.data.model.User
 
 interface PlatformService {
     fun getUser(token:String?): Result<User>

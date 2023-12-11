@@ -3,11 +3,8 @@ package com.yavs.swapify.ui.loading
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.yavs.swapify.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,18 +16,13 @@ class LoadingFragment : Fragment(R.layout.fragment_loading) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args: LoadingFragmentArgs by navArgs()
-        val from = args.fromPlatform
-        val to = args.toPlatform
-        view.findViewById<TextView>(R.id.textTest).text = "from $from to $to"
+        viewModel.handleNewIntentData(requireActivity().intent.data)
 
-        val backButton = view.findViewById<Button>(R.id.backButton)
-
-        backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_loadingFragment_to_swapFragment)
+        viewModel.navigationEvent.observe(viewLifecycleOwner){
+            if(it){
+                findNavController().navigate(R.id.action_loadingFragment_to_settingsFragment)
+            }
         }
-
-        viewModel.getUserToken(from, to)
     }
 
 }

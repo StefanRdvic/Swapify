@@ -1,4 +1,4 @@
-package com.yavs.swapify.model
+package com.yavs.swapify.data.model
 
 import com.yavs.swapify.utils.Platform
 import kotlinx.serialization.Serializable
@@ -10,5 +10,5 @@ data class User(
     val lastName: String?="",
     val link: String?="",
     val picture: String?="",
-    var platform:Platform?=null
+    var platform: Platform?=null
 )

@@ -1,6 +1,7 @@
 package com.yavs.swapify.utils
 
-enum class Platform(val accountName: String) {
-    Deezer("deezer"),
-    Spotify("spotify")
+enum class Platform {
+    Deezer,
+    Spotify,
+    SoundCloud;
 }

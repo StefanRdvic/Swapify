@@ -7,14 +7,10 @@
     <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.ui.swap.SwapFragment" android:label="fragment_swap"
               tools:layout="@layout/fragment_swap">
         <action android:id="@+id/action_swapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
-        <action
-            android:id="@+id/action_swapFragment_to_loadingFragment"
-            app:destination="@id/loadingFragment" />
     </fragment>
 
     <fragment android:id="@+id/settingsFragment" android:name="com.yavs.swapify.ui.settings.SettingsFragment"
               android:label="fragment_settings" tools:layout="@layout/fragment_settings">
-        <deepLink app:uri="yavs.swapify" app:action="android.intent.action.VIEW" app:mimeType="application/json"/>
         <action android:id="@+id/action_settingsFragment_to_swapFragment" app:destination="@id/swapFragment"/>
     </fragment>
     <fragment
@@ -22,19 +18,12 @@
         android:name="com.yavs.swapify.ui.loading.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading" >
+        <deepLink app:uri="yavs.swapify" app:action="android.intent.action.VIEW" app:mimeType="application/json"/>
         <action
             android:id="@+id/action_loadingFragment_to_swapFragment"
             app:destination="@id/swapFragment" />
-        <argument
-            android:name="fromPlatform"
-            app:argType="string" />
-        <argument
-            android:name="toPlatform"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_loadingFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.yavs.swapify.ui.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
 </navigation>

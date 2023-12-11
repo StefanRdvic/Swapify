@@ -1,17 +1,18 @@
-package com.yavs.swapify.service
+package com.yavs.swapify.di
 
+import com.yavs.swapify.service.DeezerService
+import com.yavs.swapify.service.PlatformService
+import com.yavs.swapify.service.SpotifyService
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
-import javax.inject.Named
 
 
 @Module
-@InstallIn(SingletonComponent::class, SingletonComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class ServiceModule {
 
     @Binds

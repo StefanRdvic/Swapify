@@ -1,4 +1,4 @@
-package com.yavs.swapify.model
+package com.yavs.swapify.data.model
 
 import kotlinx.serialization.Serializable
 
