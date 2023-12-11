@@ -1,6 +1,5 @@
 package com.yavs.swapify.service
 
-import com.yavs.swapify.data.model.Artist
 import com.yavs.swapify.data.model.Playlist
 import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
@@ -57,16 +56,6 @@ class DeezerService @Inject constructor() : PlatformService {
                     User(platform = Platform.Deezer)
                 }
             }
-        }
-
-
-        override fun getTrack(trackId: Long): Track {
-            TODO("Not yet implemented")
-        }
-
-
-        override fun getArtist(artistId: Long): Artist {
-            TODO("Not yet implemented")
         }
 
         override fun getPlaylists(token: String): List<Playlist> {
