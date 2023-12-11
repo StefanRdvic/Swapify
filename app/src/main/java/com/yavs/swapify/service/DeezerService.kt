@@ -44,11 +44,15 @@ class DeezerService @Inject constructor() : PlatformService {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)
 
-        override suspend fun getUser(token: String): User? {
-            val response = deezerApi.getUser(token!!)
+        override suspend fun getUser(token: String): User {
+            val response = deezerApi.getUser(token)
             return when(response.code()){
                 200 -> {
-                    response.body()
+                    var user = response.body()
+                    if(user==null){
+                        user = User(platform = Platform.Deezer)
+                    }
+                    user
                 }else ->{
                     User(platform = Platform.Deezer)
                 }
