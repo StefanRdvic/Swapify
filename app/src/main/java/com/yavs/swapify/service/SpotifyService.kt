@@ -4,7 +4,6 @@ import com.yavs.swapify.data.model.Artist
 import com.yavs.swapify.data.model.Playlist
 import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
-import com.yavs.swapify.utils.Platform
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -24,16 +23,8 @@ class SpotifyService @Inject constructor() : PlatformService {
         const val BASE_URL = "https://api.spotify.com"
     }
 
-    override fun getUser(token: String?): Result<User> {
-        val req = Request.Builder().url("$BASE_URL/user/me?access_token=$token").build()
-        val call: Call = http.newCall(req)
-        val response: Response = call.execute()
-        if (response.code==200){
-            val user = json.decodeFromString<User>(response.body?.string()!!)
-            user.platform=Platform.Deezer
-            return Result.success(user)
-        }
-        return Result.failure(Exception("No user found"))
+    override suspend fun getUser(token: String): User? {
+        return null
     }
 
     override fun getTrack(trackId: Long): Track {

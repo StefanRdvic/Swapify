@@ -1,28 +1,58 @@
 package com.yavs.swapify.service
 
-import android.util.Log
 import com.yavs.swapify.data.model.Artist
 import com.yavs.swapify.data.model.Playlist
 import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
 import com.yavs.swapify.service.authService.DeezerAuthService
 import com.yavs.swapify.utils.Constants
+import com.yavs.swapify.utils.Platform
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.Url
 import javax.inject.Inject
 
 
 class DeezerService @Inject constructor() : PlatformService {
         private val deezerAuthService: PlatformService = DeezerAuthService() //delegation
+        interface DeeezerApi{
+            @GET("user/me")
+            suspend fun getUser(
+                @Query("access_token") accessToken: String
+            ): Response<User>
 
-        private val retrofit = Retrofit.Builder()
+            @GET("user/me/playlists")
+            suspend fun getPlaylists(
+                @Query("access_token") accessToken: String
+            ): Response<List<Playlist>>
+
+            @GET("search/track")
+            suspend fun searchTrack(
+                @Query("q") query: String,
+            ): Response<List<Track>>
+
+            @GET
+            suspend fun getTracks(
+                @Url url: String
+            ): Response<List<Track>>
+        }
+
+        private val deezerApi = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.Deezer.BASE_URL).build()
+            .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)
 
-
-        override fun getUser(token: String?): Result<User> {
-            Log.i("test cass", "here")
-            TODO("Not yet implemented")
+        override suspend fun getUser(token: String): User? {
+            val response = deezerApi.getUser(token!!)
+            return when(response.code()){
+                200 -> {
+                    response.body()
+                }else ->{
+                    User(platform = Platform.Deezer)
+                }
+            }
         }
 
 

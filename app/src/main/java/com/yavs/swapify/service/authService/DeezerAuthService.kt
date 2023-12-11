@@ -35,7 +35,7 @@ class DeezerAuthService: PlatformService {
             .getToken(Constants.Deezer.APP_ID.toString(), Constants.Deezer.SECRET, code)
     }
 
-    override fun getUser(token: String?): Result<User> {
+    override suspend fun getUser(token: String): User {
         throw NotImplementedError()
     }
 

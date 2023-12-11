@@ -12,6 +12,7 @@ import com.yavs.swapify.utils.Platform
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +29,12 @@ class SettingsViewModel @Inject constructor(
 
     private fun syncUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            users.postValue(Platform.values().map {
-                services[it.name.lowercase()]?.getUser(sharedPreferencesRepository.getString(it.name, null))?.getOrNull() ?: User(platform = it)
+            users.postValue(Platform.entries.map {
+                var token = ""
+                withContext(Dispatchers.Main) {
+                    token = sharedPreferencesRepository.getString(it.name, null).toString()
+                }
+                services[it.name.lowercase()]?.getUser(token) ?: User(platform = it)
             })
         }
     }
