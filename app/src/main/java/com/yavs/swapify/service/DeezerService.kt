@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 class DeezerService @Inject constructor() : PlatformService {
         private val deezerAuthService: PlatformService = DeezerAuthService() //delegation
+
         interface DeeezerApi{
             @GET("user/me")
             suspend fun getUser(
@@ -45,16 +46,9 @@ class DeezerService @Inject constructor() : PlatformService {
 
         override suspend fun getUser(token: String): User {
             val response = deezerApi.getUser(token)
-            return when(response.code()){
-                200 -> {
-                    var user = response.body()
-                    if(user==null){
-                        user = User(platform = Platform.Deezer)
-                    }
-                    user
-                }else ->{
-                    User(platform = Platform.Deezer)
-                }
+
+            return (if(response.isSuccessful) response.body()!!  else User()).also {
+                it.platform = Platform.Deezer
             }
         }
 

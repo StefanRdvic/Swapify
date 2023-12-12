@@ -14,7 +14,7 @@ import com.yavs.swapify.data.model.User
 import com.yavs.swapify.utils.Platform
 
 class SettingsAdapter(
-    private var users: List<User>,
+    private var users: MutableList<User>,
     private val onConnectButtonClick: (Platform) -> Unit,
     private val onDisconnectButtonClick: (Platform) -> Unit
 ) :  RecyclerView.Adapter<ViewHolder>() {
@@ -25,12 +25,13 @@ class SettingsAdapter(
         private val disconnect: Button = view.findViewById(R.id.disconnect)
         private val platform: TextView = view.findViewById(R.id.platformLabel)
 
-        fun onBind(user: User, notify: () -> Unit) {
+        fun onBind(user: User, position: Int, notify: () -> Unit) {
             Picasso.get().load(user.picture).into(pfp)
             username.text = view.context.getString(R.string.userFullName, user.name, user.lastName)
             platform.text = user.platform?.name ?: ""
             disconnect.setOnClickListener {
                 onDisconnectButtonClick(user.platform!!)
+                users[position] = User(platform = user.platform) // update to null user
                 notify()
             }
         }
@@ -66,14 +67,16 @@ class SettingsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
-            is UserViewHolder -> holder.onBind(users[position]){ notifyItemChanged(position) }
+            is UserViewHolder -> holder.onBind(users[position], position){
+                notifyItemChanged(position)
+            }
 
             is AuthViewHolder -> holder.onBind(users[position])
         }
     }
+
     override fun getItemCount(): Int {
         return users.size
     }
-
 
 }

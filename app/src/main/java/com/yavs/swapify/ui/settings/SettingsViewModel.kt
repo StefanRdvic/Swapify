@@ -20,7 +20,9 @@ class SettingsViewModel @Inject constructor(
     private val sharedPreferencesRepository: SharedPreferencesRepository
 ) : ViewModel() {
 
-    val users = MutableLiveData<List<User>>()
+    val fetchedUsers = MutableLiveData<MutableList<User>>()
+    val userUpdated = MutableLiveData<Pair<Int, User>>()
+
 
     init {
         syncUsers()
@@ -28,11 +30,11 @@ class SettingsViewModel @Inject constructor(
 
     private fun syncUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            users.postValue(Platform.values().map {
-                sharedPreferencesRepository.getString(it.name.lowercase(), null)?.let {token ->
+            fetchedUsers.postValue(Platform.values().map {
+                sharedPreferencesRepository.getString(it.name)?.let {token ->
                     services[it.name.lowercase()]?.getUser(token)
                 } ?: User(platform = it)
-            })
+            }.toMutableList())
         }
     }
 
@@ -40,6 +42,10 @@ class SettingsViewModel @Inject constructor(
         services[platform.name.lowercase()]?.getOAuthUrl()?.let {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
         }
+    }
+
+    fun disconnect(platform: Platform) {
+        sharedPreferencesRepository.remove(platform.name)
     }
 
 }

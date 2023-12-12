@@ -12,6 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
+
+    private lateinit var adapter: SettingsAdapter
+
     private val viewModel: SettingsViewModel by viewModels()
 
 
@@ -24,20 +27,29 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.userRecycler)
 
-        recyclerView.adapter = SettingsAdapter(listOf(), onDisconnectButtonClick = {}, onConnectButtonClick = {})
+        recyclerView.adapter = SettingsAdapter(mutableListOf(), onDisconnectButtonClick = {}, onConnectButtonClick = {})
 
-        viewModel.users.observe(viewLifecycleOwner) {
-            recyclerView.adapter = SettingsAdapter(it,
-                onDisconnectButtonClick = { platform ->
-                    context?.getSharedPreferences("swapify", Context.MODE_PRIVATE)?.edit()?.remove(platform.name)?.apply()
+        viewModel.fetchedUsers.observe(viewLifecycleOwner) {
+            adapter = SettingsAdapter(it,
+                onDisconnectButtonClick = {platform ->
+                    viewModel.disconnect(platform)
                 },
                 onConnectButtonClick = { platform ->
                     viewModel.startOAuthActivity(platform){ intent ->
-                        context?.startActivity(intent)
+                        requireContext().startActivity(intent)
                     }
                 })
+            recyclerView.swapAdapter(
+                adapter, false
+            )
         }
 
+        viewModel.userUpdated.observe(viewLifecycleOwner) {
+            if (it != null) {
+                val (index, user) = it
+                adapter.notifyItemChanged(index, user)
+            }
+        }
 
     }
 }

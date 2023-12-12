@@ -39,13 +39,6 @@ class DeezerAuthService: PlatformService {
         throw NotImplementedError()
     }
 
-    override fun getTrack(trackId: Long): Track {
-        throw NotImplementedError()
-    }
-
-    override fun getArtist(artistId: Long): Artist {
-        throw NotImplementedError()
-    }
 
     override fun getPlaylists(token: String): List<Playlist> {
         throw NotImplementedError()

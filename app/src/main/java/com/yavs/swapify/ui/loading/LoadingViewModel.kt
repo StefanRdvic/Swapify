@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yavs.swapify.data.repository.SharedPreferencesRepository
 import com.yavs.swapify.service.PlatformService
+import com.yavs.swapify.utils.Platform
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,25 +31,22 @@ class LoadingViewModel @Inject constructor(
             "/deezer" -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     try {
-                        val code = data.getQueryParameter("code") ?: throw IllegalStateException("Code not found")
-                        val service = services["deezer"] ?: throw IllegalStateException("Service not found")
-                        val response = service.getOAuthToken(code)
-
-                        val queryParams = response.split("&").associate {
-                            val parts = it.split("=")
-                            if (parts.size == 2) parts[0] to parts[1] else throw IllegalArgumentException("Invalid response format")
+                        val res = services[Platform.Deezer.name.lowercase()]!!.getOAuthToken(
+                            data.getQueryParameter("code")!!
+                        )
+                        val queryParams = res.split("&").associate {
+                            val (k, v) = it.split("=")
+                            k to v
                         }
 
-                        val accessToken = queryParams["access_token"] ?: throw IllegalStateException("Access token not found")
-
-                        withContext(Dispatchers.Main) {
-                            sharedPreferencesRepository.putString("deezer", accessToken)
-                        }
+                        sharedPreferencesRepository.putString(Platform.Deezer.name, queryParams["access_token"]!!)
                     } catch (e: Exception) {
+                        // todo : create a status object to handle errors
                         withContext(Dispatchers.Main) {
                             Log.e("intent", e.toString())
                         }
                     } finally {
+                        // todo : post the futur status object
                         navigationEvent.postValue(true)
                     }
 
