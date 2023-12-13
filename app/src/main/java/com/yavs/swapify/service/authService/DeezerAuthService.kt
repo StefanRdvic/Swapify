@@ -26,7 +26,7 @@ class DeezerAuthService: PlatformService {
         .baseUrl(Constants.Deezer.AUTH_URL).build().create(DeezerAuthApi::class.java)
 
     override fun getOAuthUrl(): String {
-        return "https://connect.deezer.com/oauth/auth.php?app_id=${Constants.Deezer.APP_ID}&redirect_uri=${Constants.Deezer.REDIRECT_URL}&perms=basic_access,manage_library,offline_access"
+        return "${Constants.Deezer.AUTH_URL}/oauth/auth.php?app_id=${Constants.Deezer.APP_ID}&redirect_uri=${Constants.Deezer.REDIRECT_URL}&perms=basic_access,manage_library,offline_access"
     }
 
     override suspend fun getOAuthToken(code: String): String {

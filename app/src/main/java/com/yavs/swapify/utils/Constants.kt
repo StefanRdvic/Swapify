@@ -9,4 +9,12 @@ object Constants {
         const val BASE_URL = "https://api.deezer.com"
         const val AUTH_URL = "https://connect.deezer.com"
     }
+
+    object Spotify{
+        const val APP_ID: String = "ae11204407da494882852e37caa3b9de"
+        const val APP_CRED: String = "YWUxMTIwNDQwN2RhNDk0ODgyODUyZTM3Y2FhM2I5ZGU6ZDBiOTFjZTc4NDBhNGQ4NWJiNzczNDFmMmVhZTA4OGM="
+        const val REDIRECT_URL: String = "http://yavs.swapify/spotify"
+        const val BASE_URL = "https://api.spotify.com"
+        const val AUTH_URL = "https://accounts.spotify.com"
+    }
 }

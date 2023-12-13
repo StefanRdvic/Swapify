@@ -12,7 +12,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import javax.inject.Inject
+
 
 @HiltViewModel
 class LoadingViewModel @Inject constructor(
@@ -49,6 +51,29 @@ class LoadingViewModel @Inject constructor(
                         // todo : post the futur status object
                         navigationEvent.postValue(true)
                     }
+
+                }
+            }
+            "/spotify" -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        val res = services[Platform.Spotify.name.lowercase()]!!.getOAuthToken(
+                            data.getQueryParameter("code")!!
+                        )
+                        val jresponse = JSONObject(res)
+                        val token = jresponse.getString("access_token")
+                        Log.i("d",token)
+                        sharedPreferencesRepository.putString(Platform.Spotify.name, token)
+                    } catch (e: Exception) {
+                        // todo : create a status object to handle errors
+                        withContext(Dispatchers.Main) {
+                            Log.e("intent", e.toString())
+                        }
+                    } finally {
+                        // todo : post the futur status object
+                        navigationEvent.postValue(true)
+                    }
+
 
                 }
             }
