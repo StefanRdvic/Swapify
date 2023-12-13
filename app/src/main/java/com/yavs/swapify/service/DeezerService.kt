@@ -17,7 +17,11 @@ import javax.inject.Inject
 
 class DeezerService @Inject constructor() : PlatformService {
         private val deezerAuthService: PlatformService = DeezerAuthService() //delegation
+        private val deezerApi = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)
 
+        data class Wrapper<T>(val data: T)
         interface DeeezerApi{
             @GET("user/me")
             suspend fun getUser(
@@ -27,7 +31,7 @@ class DeezerService @Inject constructor() : PlatformService {
             @GET("user/me/playlists")
             suspend fun getPlaylists(
                 @Query("access_token") accessToken: String
-            ): Response<List<Playlist>>
+            ): Response<Wrapper<List<Playlist>>>
 
             @GET("search/track")
             suspend fun searchTrack(
@@ -37,12 +41,10 @@ class DeezerService @Inject constructor() : PlatformService {
             @GET
             suspend fun getTracks(
                 @Url url: String
-            ): Response<List<Track>>
+            ): Response<Wrapper<List<Track>>>
         }
 
-        private val deezerApi = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)
+
 
         override suspend fun getUser(token: String): User {
             val response = deezerApi.getUser(token)
@@ -52,11 +54,13 @@ class DeezerService @Inject constructor() : PlatformService {
             }
         }
 
-        override fun getPlaylists(token: String): List<Playlist> {
-            TODO("Not yet implemented")
+        override suspend fun getPlaylists(token: String): List<Playlist> {
+            val response = deezerApi.getPlaylists(token)
+
+            return (if(response.isSuccessful) response.body()!!.data else emptyList())
         }
 
-        override fun searchTrack(title: String, artist: String): List<Track> {
+        override suspend fun searchTrack(title: String, artist: String): List<Track> {
             TODO("Not yet implemented")
 
         }

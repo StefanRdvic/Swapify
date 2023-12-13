@@ -1,6 +1,5 @@
 package com.yavs.swapify.service.authService
 
-import com.yavs.swapify.data.model.Artist
 import com.yavs.swapify.data.model.Playlist
 import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
@@ -40,11 +39,11 @@ class DeezerAuthService: PlatformService {
     }
 
 
-    override fun getPlaylists(token: String): List<Playlist> {
+    override suspend fun getPlaylists(token: String): List<Playlist> {
         throw NotImplementedError()
     }
 
-    override fun searchTrack(title: String, artist: String): List<Track> {
+    override suspend fun searchTrack(title: String, artist: String): List<Track> {
         throw NotImplementedError()
     }
 
