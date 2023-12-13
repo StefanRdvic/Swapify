@@ -38,15 +38,14 @@ class SwapFragment : Fragment(R.layout.fragment_swap) {
         val swapButton = view.findViewById<Button>(R.id.swapButton)
 
         swapButton.setOnClickListener {
-            // check if two tokens exist in shared preferences
-            // if not toast go settings to connect
-            // else go to loading fragment
-
-//            findNavController().navigate(
-//                SwapFragmentDirections.actionSwapFragmentToLoadingFragment(
-//                    spinnerFrom.selectedItem.toString(),
-//                    spinnerTo.selectedItem.toString())
-//            )
+//             check if two tokens exist in shared preferences
+//             if not toast go settings to connect
+//             else go to loading fragment
+            val action = SwapFragmentDirections.actionSwapFragmentToPlaylistFragment(
+                spinnerFrom.selectedItem.toString(),
+                spinnerTo.selectedItem.toString()
+            )
+            findNavController().navigate(action)
         }
 
         view.findViewById<Button>(R.id.buttonTest).setOnClickListener{

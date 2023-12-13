@@ -9,6 +9,6 @@ data class Playlist(
     val link: String,
     val picture:String,
     val creator: User,
-    @SerializedName(value="name", alternate= ["person", "user"])
+    @SerializedName(value="nbTracks", alternate= ["nb_tracks"])
     val nbTracks: Int
 )

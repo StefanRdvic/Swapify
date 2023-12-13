@@ -7,6 +7,7 @@
     <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.ui.swap.SwapFragment" android:label="fragment_swap"
               tools:layout="@layout/fragment_swap">
         <action android:id="@+id/action_swapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
+        <action android:id="@+id/action_swapFragment_to_playlistFragment" app:destination="@id/playlistsFragment"/>
     </fragment>
 
     <fragment android:id="@+id/settingsFragment" android:name="com.yavs.swapify.ui.settings.SettingsFragment"
@@ -25,5 +26,11 @@
         <action
             android:id="@+id/action_loadingFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment android:id="@+id/playlistsFragment" android:name="com.yavs.swapify.ui.playlists.PlaylistsFragment"
+              android:label="PlaylistsFragment" tools:layout="@layout/fragment_playlist">
+        <action android:id="@+id/action_playlistFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
+        <argument android:name="fromPlatform" app:argType="string"/>
+        <argument android:name="toPlatform" app:argType="string"/>
     </fragment>
 </navigation>
