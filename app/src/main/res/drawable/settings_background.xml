@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- When the item is not selected (state_focused="false" and state_pressed="false"), the background is transparent. -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <stroke android:width="3dp" android:color="#282733"/>
+            <solid android:color="#4D232327"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="oval">
+            <stroke android:width="3dp" android:color="#282733"/>
+            <solid android:color="#19191C"/>
+        </shape>
+    </item>
+
+
+</selector>

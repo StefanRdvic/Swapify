@@ -4,11 +4,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings">Settings</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="connect">Connect</string>
+    <string name="logout">log out</string>
+    <string name="login">log into %1$s</string>
     <string name="userFullName">%1$s %2$s</string>
     <string name="pfp">PFP</string>
     <string name="playlistImage">PlalistImage</string>
     <string name="tracks">%1$s tracks</string>
     <string name="platform">%1$s : </string>
+    <string name="data_load">Retrieving data</string>
+    <string name="confirm">Confirm</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="go">Go !</string>
+
 </resources>

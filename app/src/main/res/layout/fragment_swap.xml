@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   tools:context=".ui.swap.SwapFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    tools:context=".ui.swap.SwapFragment">
 
     <Spinner
         android:id="@+id/fromSpinner"
-        android:layout_width="322dp"
-        android:layout_height="52dp"
+        android:layout_width="353dp"
+        android:layout_height="64dp"
+        android:background="@drawable/spinner_background"
+        android:dropDownVerticalOffset="70dp"
+        android:popupBackground="@drawable/spinner_dropdown_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
@@ -17,22 +21,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.251" />
 
-    <TextView
-        android:id="@+id/fromTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="From"
-        app:layout_constraintBottom_toTopOf="@+id/fromSpinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
     <Spinner
         android:id="@+id/toSpinner"
-        android:layout_width="322dp"
-        android:layout_height="52dp"
+        android:layout_width="353dp"
+        android:layout_height="64dp"
+        android:background="@drawable/spinner_background"
+        android:dropDownVerticalOffset="70dp"
+        android:popupBackground="@drawable/spinner_dropdown_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -40,41 +35,64 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.575" />
 
+
+    <TextView
+        android:id="@+id/fromTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from"
+        android:textSize="18sp"
+        android:textColor="@color/secondary_text"
+        app:layout_constraintBottom_toTopOf="@+id/fromSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
     <TextView
         android:id="@+id/toTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="to"
+        android:text="@string/to"
+        android:textSize="18sp"
+        android:textColor="@color/secondary_text"
         app:layout_constraintBottom_toTopOf="@+id/toSpinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fromSpinner"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/swapButton"
-        android:layout_width="326dp"
+        android:layout_width="353dp"
         android:layout_height="69dp"
-        android:layout_marginBottom="140dp"
-        android:text="Swap !"
+        android:background="@drawable/button_background"
+        android:text="@string/go"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/toSpinner"
+        app:layout_constraintVertical_bias="0.618" />
 
-    <Button
+    <ImageButton
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        app:layout_constraintBottom_toTopOf="@+id/fromSpinner"
+        android:background="@drawable/settings_background"
+        android:contentDescription="@string/settings"
+        android:padding="8dp"
+        android:src="@drawable/baseline_settings_24"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/textView4"
@@ -87,15 +105,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.287" />
-
-    <Button
-        android:id="@+id/buttonTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swapButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

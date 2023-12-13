@@ -31,7 +31,7 @@ class SettingsViewModel @Inject constructor(
     private fun syncUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             fetchedUsers.postValue(Platform.entries.map {
-                sharedPreferencesRepository.getString(it.name.lowercase())?.let {token ->
+                sharedPreferencesRepository.getString(it.name)?.let {token ->
                     services[it.name.lowercase()]?.getUser(token)
                 } ?: User(platform = it)
             }.toMutableList())

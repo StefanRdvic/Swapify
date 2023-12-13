@@ -15,14 +15,14 @@ import com.yavs.swapify.utils.Platform
 
 class SettingsAdapter(
     private var users: MutableList<User>,
-    private val onConnectButtonClick: (Platform) -> Unit,
-    private val onDisconnectButtonClick: (Platform) -> Unit
+    private val onLogInButtonClick: (Platform) -> Unit,
+    private val onLogOutButtonClick: (Platform) -> Unit
 ) :  RecyclerView.Adapter<ViewHolder>() {
 
     inner class UserViewHolder(private val view: View) : ViewHolder(view) {
         private val pfp: ImageView = view.findViewById(R.id.pfp)
         private val username: TextView = view.findViewById(R.id.username)
-        private val disconnect: Button = view.findViewById(R.id.disconnect)
+        private val disconnect: Button = view.findViewById(R.id.logOutButton)
         private val platform: TextView = view.findViewById(R.id.platformLabel)
 
         fun onBind(user: User, position: Int, notify: () -> Unit) {
@@ -30,7 +30,7 @@ class SettingsAdapter(
             username.text = view.context.getString(R.string.userFullName, user.name, user.lastName)
             platform.text = user.platform?.name ?: ""
             disconnect.setOnClickListener {
-                onDisconnectButtonClick(user.platform!!)
+                onLogOutButtonClick(user.platform!!)
                 users[position] = User(platform = user.platform) // update to null user
                 notify()
             }
@@ -38,13 +38,13 @@ class SettingsAdapter(
     }
 
     inner class AuthViewHolder(private val view: View) : ViewHolder(view) {
-        private val authButton = view.findViewById<Button>(R.id.connectButton)
-        private val platform = view.findViewById<TextView>(R.id.platformTextView)
+        private val authButton = view.findViewById<Button>(R.id.logInButton)
 
         fun onBind(user: User) {
-            platform.text = view.context.getString(R.string.platform, user.platform?.name)
+
+            authButton.text = view.context.getString(R.string.login, user.platform?.name)
             authButton.setOnClickListener {
-                onConnectButtonClick(user.platform!!)
+                onLogInButtonClick(user.platform!!)
             }
         }
     }

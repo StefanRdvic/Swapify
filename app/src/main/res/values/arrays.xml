@@ -4,5 +4,6 @@
     <string-array name="platforms">
         <item>Spotify</item>
         <item>Deezer</item>
+        <item>SoundCloud</item>
     </string-array>
 </resources>

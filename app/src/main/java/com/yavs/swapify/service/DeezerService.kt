@@ -22,6 +22,7 @@ class DeezerService @Inject constructor() : PlatformService {
             .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)
 
         data class Wrapper<T>(val data: T)
+
         interface DeeezerApi{
             @GET("user/me")
             suspend fun getUser(

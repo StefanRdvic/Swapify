@@ -1,6 +1,5 @@
 package com.yavs.swapify.ui.settings
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -27,14 +26,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.userRecycler)
 
-        recyclerView.adapter = SettingsAdapter(mutableListOf(), onDisconnectButtonClick = {}, onConnectButtonClick = {})
+        recyclerView.adapter = SettingsAdapter(mutableListOf(), onLogOutButtonClick = {}, onLogInButtonClick = {})
 
         viewModel.fetchedUsers.observe(viewLifecycleOwner) {
             adapter = SettingsAdapter(it,
-                onDisconnectButtonClick = {platform ->
+                onLogOutButtonClick = { platform ->
                     viewModel.disconnect(platform)
                 },
-                onConnectButtonClick = { platform ->
+                onLogInButtonClick = { platform ->
                     viewModel.startOAuthActivity(platform){ intent ->
                         requireContext().startActivity(intent)
                     }
