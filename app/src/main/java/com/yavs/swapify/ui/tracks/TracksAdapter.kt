@@ -51,7 +51,10 @@ class TracksAdapter(
                 mediaPlayer.setOnPreparedListener{ onPrepared() }
                 mediaPlayer.setOnCompletionListener { player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_play_arrow_24)) }
             } catch (_: Exception) {
-                Toast.makeText(itemView.context,"no preview", Toast.LENGTH_SHORT).show()
+                mediaPlayer.reset()
+            }
+            player.setOnClickListener{
+                Toast.makeText(itemView.context,"no preview for ${track.title}", Toast.LENGTH_SHORT).show()
             }
 
             name.text = track.title

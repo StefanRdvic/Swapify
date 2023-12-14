@@ -23,6 +23,7 @@ class SpotifyService  @Inject constructor() : PlatformService {
     private val spotifyAuthService: PlatformService = SpotifyAuthService()
 
     data class Wrapper<T>(val items: T)
+    data class TrackWrapper<T>(val track: T?)
     data class Search<T>(val tracks: Wrapper<T>)
 
     interface SpotifyApi{
@@ -47,8 +48,9 @@ class SpotifyService  @Inject constructor() : PlatformService {
 
         @GET("v1/playlists/{id}/tracks")
         suspend fun getPlaylistTracks(
-            @Path("id") id:String
-        ): Response<Wrapper<List<SpotifyTrack>>>
+            @Path("id") id:String,
+            @Header("Authorization")authorization:String,
+        ): Response<Wrapper<List<TrackWrapper<SpotifyTrack>>>>
     }
 
     private val spotifyApi = Retrofit.Builder()
@@ -69,8 +71,8 @@ class SpotifyService  @Inject constructor() : PlatformService {
     }
 
     override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
-        val response = spotifyApi.getPlaylistTracks("Bearer $token")
-        return (if(response.isSuccessful) response.body()!!.items.map { it.toTrack() } else emptyList())
+        val response = spotifyApi.getPlaylistTracks(playlistId,"Bearer $token")
+        return (if(response.isSuccessful) response.body()!!.items.filter { it.track!=null }.map { it.track?.toTrack()?: Track() } else emptyList())
     }
 
     override suspend fun searchTrack(title: String, artist: String,token:String): Track? {

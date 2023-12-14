@@ -76,7 +76,7 @@ class DeezerService @Inject constructor() : PlatformService {
 
         override suspend fun searchTrack(title: String, artist: String,token : String):Track? {
             val response = deezerApi.searchTrack("artist:\"$artist\" track:\"$title\"")
-            return (if(response.isSuccessful) response.body()!!.data.map{ it.toTrack() }.getOrNull(0) else null)
+            return (if(response.isSuccessful) response.body()?.data?.map{ it.toTrack() }?.getOrNull(0) else null)
         }
 
         override fun getOAuthUrl(): String {
