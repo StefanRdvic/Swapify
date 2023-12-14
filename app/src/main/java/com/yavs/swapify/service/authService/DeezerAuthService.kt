@@ -43,6 +43,10 @@ class DeezerAuthService: PlatformService {
         throw NotImplementedError()
     }
 
+    override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
+        throw NotImplementedError()
+    }
+
     override suspend fun searchTrack(title: String, artist: String,token: String): Track {
         throw NotImplementedError()
     }

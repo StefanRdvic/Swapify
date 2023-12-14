@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content">
+    <ImageView
+            android:id="@+id/trackImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            android:src="@drawable/baseline_music_note_24"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp" app:layout_constraintVertical_bias="0.0"
+            android:contentDescription="@string/playlistImage" app:srcCompat="@drawable/baseline_music_note_24"
+            tools:srcCompat="@drawable/baseline_music_note_24"/>
+    <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content" android:id="@+id/trackName"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            android:inputType="textMultiLine"
+            android:layout_marginStart="25dp" app:layout_constraintStart_toEndOf="@+id/trackImage"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="40dp" android:textSize="16sp"
+            tools:ignore="TextViewEdits"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" android:id="@+id/trackArtist"
+            android:textSize="12sp"
+            android:textColor="@color/secondary_text"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/trackName" android:layout_marginStart="25dp"
+            app:layout_constraintStart_toEndOf="@+id/trackImage" android:layout_marginTop="10dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPlayOrPause"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            app:fabCustomSize="60dp"
+            android:background="@drawable/button_background"
+            android:src="@drawable/baseline_play_arrow_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="30dp"
+            android:layout_marginTop="40dp" android:contentDescription="@string/preview"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

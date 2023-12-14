@@ -16,5 +16,8 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="go">Go !</string>
+    <string name="select_playlists">Select a playlist</string>
+    <string name="what_we_found_on">What we found on %1$s</string>
+    <string name="preview">preview</string>
 
 </resources>

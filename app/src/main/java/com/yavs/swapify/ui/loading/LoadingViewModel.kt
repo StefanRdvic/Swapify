@@ -25,11 +25,12 @@ class LoadingViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    val navigationEvent = MutableLiveData<Boolean>()
+    val navigationEvent = MutableLiveData<String>()
+
 
     fun handleNewIntentData(data: Uri?) {
         Log.i("intent", data.toString())
-
+        var msg = ""
 
         when(data?.path){
             "/deezer" -> {
@@ -46,14 +47,16 @@ class LoadingViewModel @Inject constructor(
                         val token = Token(queryParams["access_token"]!!)
 
                         tokenRepository.save(Platform.Deezer, token)
+                        msg="Successfully connected to Deezer"
                     } catch (e: Exception) {
                         // todo : create a status object to handle errors
                         withContext(Dispatchers.Main) {
                             Log.e("intent", e.toString())
+                            msg="Error connecting to Deezer"
                         }
                     } finally {
                         // todo : post the futur status object
-                        navigationEvent.postValue(true)
+                        navigationEvent.postValue(msg)
                     }
 
                 }
@@ -73,14 +76,16 @@ class LoadingViewModel @Inject constructor(
                         )
 
                         tokenRepository.save(Platform.Spotify, token)
+                        msg="Successfully connected to Spotify"
                     } catch (e: Exception) {
                         // todo : create a status object to handle errors
                         withContext(Dispatchers.Main) {
                             Log.e("intent", e.toString())
+                            msg="Error connecting to Spotify"
                         }
                     } finally {
                         // todo : post the futur status object
-                        navigationEvent.postValue(true)
+                        navigationEvent.postValue(msg)
                     }
 
 

@@ -19,7 +19,6 @@ import dagger.hilt.android.lifecycle.withCreationCallback
 class PlaylistsFragment: Fragment(R.layout.fragment_playlist) {
 
     private val args: PlaylistsFragmentArgs by navArgs()
-
     private val viewModel by viewModels<PlaylistsViewModel>(
         extrasProducer = {
             defaultViewModelCreationExtras.withCreationCallback<PlaylistsViewModel.Factory>{
@@ -35,7 +34,9 @@ class PlaylistsFragment: Fragment(R.layout.fragment_playlist) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.playlistRecycler)
         val confirmButton = view.findViewById<Button>(R.id.playlistConfirm)
 
-        recyclerView.adapter =  PlaylistsAdapter(emptyList(), colorSelector = {0}, onSelection = {})
+        recyclerView.adapter =  PlaylistsAdapter(emptyList(), colorSelector = {0}, onSelection =  {})
+
+
 
         view.findViewById<ImageButton>(R.id.backPlaylistsButton).setOnClickListener {
             findNavController().navigate(R.id.action_playlistsFragment_to_swapFragment)
@@ -45,17 +46,35 @@ class PlaylistsFragment: Fragment(R.layout.fragment_playlist) {
             val adapter = PlaylistsAdapter(
                 it,
                 colorSelector = { id -> ContextCompat.getColor(requireContext(), id) }
-            ) { pos ->
+            ) {
+                pos ->
                 confirmButton.isEnabled = pos != -1
                 confirmButton.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
                         if (pos != -1) R.color.white else R.color.primary_text_disabled)
                 )
+
+                if (pos !=-1){
+                    val playlistId = viewModel.playlists.value?.get(pos)?.id ?:""
+                    if(playlistId.isBlank()){
+                        confirmButton.setOnClickListener(null)
+                    }else{
+                        confirmButton.setOnClickListener{
+                            findNavController().navigate(PlaylistsFragmentDirections.actionPlaylistsFragmentToTracksFragment(
+                                playlistId,
+                                args.fromPlatform,
+                                args.toPlatform
+                            ))
+                        }
+                    }
+                }
+
             }
 
             recyclerView.swapAdapter(adapter,false)
         }
+
 
     }
 

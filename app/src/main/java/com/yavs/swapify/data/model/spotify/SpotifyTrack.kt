@@ -6,7 +6,7 @@ import com.yavs.swapify.data.model.Track
 
 data class SpotifyTrack(
     val album: Album,
-    val artist: Artist,
+    val artists: List<Artist>,
     val id: String,
     val name: String,
     val uri: String,
@@ -18,7 +18,7 @@ data class SpotifyTrack(
     )
 
     inner class Artist(
-        val name: String,
+        val name: String="",
     )
 
     inner class Image(
@@ -28,7 +28,7 @@ data class SpotifyTrack(
 fun toTrack() = Track(
     title = name,
     duration = durationMs,
-    artistName = artist.name,
+    artistName = artists.getOrElse(0) { Artist() }.name,
     image = album.images.getOrNull(2)?.url //Send 64,64 image
     )
 }

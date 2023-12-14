@@ -2,12 +2,8 @@ package com.yavs.swapify.ui.swap
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -65,7 +61,7 @@ class MainFragment : Fragment(R.layout.main_swap) {
         }
 
         view.findViewById<ImageButton>(R.id.settingsButton).setOnClickListener {
-            findNavController().navigate(R.id.action_swapFragment_to_settingsFragment)
+            findNavController().navigate(MainFragmentDirections.actionSwapFragmentToSettingsFragment(""))
         }
 
 

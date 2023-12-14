@@ -33,6 +33,9 @@ class SpotifyAuthService : PlatformService {
     override suspend fun getPlaylists(token: String): List<Playlist> {
         throw NotImplementedError()
     }
+    override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
+        throw NotImplementedError()
+    }
 
     override suspend fun searchTrack(title: String, artist: String,token : String): Track {
         throw NotImplementedError()

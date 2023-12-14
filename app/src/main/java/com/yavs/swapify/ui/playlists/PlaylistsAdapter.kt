@@ -1,5 +1,6 @@
 package com.yavs.swapify.ui.playlists
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,8 +39,8 @@ class PlaylistsAdapter(
 
                 notifyItemChanged(adapterPosition)
                 notifyItemChanged(oldSelected)
-
-                onSelection(selected)
+                Log.i("ok", selected.toString())
+                onSelection.invoke(selected)
             }
         }
     }
