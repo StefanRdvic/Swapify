@@ -57,14 +57,17 @@ class PlaylistsFragment: Fragment(R.layout.fragment_playlist) {
 
                 if (pos !=-1){
                     val playlistId = viewModel.playlists.value?.get(pos)?.id ?:""
+                    val playlistName = viewModel.playlists.value?.get(pos)?.title ?:""
+
                     if(playlistId.isBlank()){
                         confirmButton.setOnClickListener(null)
                     }else{
                         confirmButton.setOnClickListener{
                             findNavController().navigate(PlaylistsFragmentDirections.actionPlaylistsFragmentToTracksFragment(
-                                playlistId,
                                 args.fromPlatform,
-                                args.toPlatform
+                                args.toPlatform,
+                                playlistId,
+                                playlistName,
                             ))
                         }
                     }

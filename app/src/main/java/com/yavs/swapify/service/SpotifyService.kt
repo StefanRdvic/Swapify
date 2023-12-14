@@ -9,11 +9,17 @@ import com.yavs.swapify.data.model.spotify.SpotifyUser
 import com.yavs.swapify.service.authService.SpotifyAuthService
 import com.yavs.swapify.utils.Constants
 import com.yavs.swapify.utils.Platform
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Inject
@@ -46,13 +52,19 @@ class SpotifyService  @Inject constructor() : PlatformService {
             @Query("include_external")includeExternal:String
         ): Response<Search<List<SpotifyTrack>>>
 
+        @Headers("Content-Type: application/json")
+        @POST("v1/me/playlists")
+        suspend fun createPlaylistSwap(
+            @Header("Authorization") authorization : String,
+            @Body name:RequestBody
+        ): Response<Any>
+
         @GET("v1/playlists/{id}/tracks")
         suspend fun getPlaylistTracks(
             @Path("id") id:String,
             @Header("Authorization")authorization:String,
         ): Response<Wrapper<List<TrackWrapper<SpotifyTrack>>>>
     }
-
     private val spotifyApi = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(Constants.Spotify.BASE_URL).build().create(SpotifyApi:: class.java)
@@ -86,6 +98,16 @@ class SpotifyService  @Inject constructor() : PlatformService {
         return if(response.isSuccessful) response.body()!!.tracks.items.map { it.toTrack() }.getOrNull(0) else null
     }
 
+    override suspend fun createPlaylistSwap(token: String,name:String): Boolean {
+        val json = "{\"name\": \"$name\"}"
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+
+        val requestBody = json.toRequestBody(mediaType)
+
+        val response = spotifyApi.createPlaylistSwap("Bearer $token",requestBody)
+        println(response)
+        return response.isSuccessful
+    }
     override fun getOAuthUrl(): String {
         return spotifyAuthService.getOAuthUrl()
     }

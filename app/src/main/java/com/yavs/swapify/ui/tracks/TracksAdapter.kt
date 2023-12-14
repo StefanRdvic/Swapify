@@ -20,7 +20,7 @@ import com.yavs.swapify.data.model.Track
 class TracksAdapter(
     private val tracks: MutableList<Track>,
     private val colorSelector: (id: Int) -> Int,
-    private val onSelection: (pos: Int) -> Unit
+    private val onSelection: (pos: MutableList<Int>) -> Unit
 ) : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>() {
 
     private var selected = (0..tracks.size).toMutableList()
@@ -37,6 +37,7 @@ class TracksAdapter(
                 if( selected.any{ it == adapterPosition} ) selected.removeIf{it==adapterPosition} else selected.add(adapterPosition)
                 notifyItemChanged(adapterPosition)
                 Log.i("ok",selected.toString())
+                onSelection(selected)
             }
             mediaPlayer.setAudioAttributes(AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
         }
@@ -73,7 +74,6 @@ class TracksAdapter(
                 }
             }
         }
-
     }
 
     override fun onCreateViewHolder(

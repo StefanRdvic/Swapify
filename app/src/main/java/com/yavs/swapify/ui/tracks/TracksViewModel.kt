@@ -21,9 +21,11 @@ class TracksViewModel @AssistedInject constructor(
     private val tokenRepository: TokenRepository,
     @Assisted("from") private val from: Platform,
     @Assisted("to") private val to: Platform,
-    @Assisted private val playlistId: String,
+    @Assisted("playlistId") private val playlistId: String,
+    @Assisted("playlistName") private val playlistName: String
 ) : ViewModel(){
     val tracks = MutableLiveData<List<Track>>()
+    val playlistCreated = MutableLiveData<Boolean>()
 
     init {
         searchPlaylistTracks()
@@ -44,10 +46,18 @@ class TracksViewModel @AssistedInject constructor(
         }
     }
 
+    fun createPlaylistSwap()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isCreated = tokenRepository.get(to)?.let { services[to.name.lowercase()]?.createPlaylistSwap(it.access,playlistName) } ?: false
+            playlistCreated.postValue(isCreated)
+        }
+    }
+
 
 
     @AssistedFactory
     interface Factory {
-        fun create(@Assisted("from") from: Platform, @Assisted("to") to: Platform, playlistId: String): TracksViewModel
+        fun create(@Assisted("from") from: Platform, @Assisted("to") to: Platform, @Assisted("playlistId")playlistId: String,@Assisted("playlistName")playlistName: String): TracksViewModel
     }
 }

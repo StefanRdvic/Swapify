@@ -79,6 +79,10 @@ class DeezerService @Inject constructor() : PlatformService {
             return (if(response.isSuccessful) response.body()?.data?.map{ it.toTrack() }?.getOrNull(0) else null)
         }
 
+        override suspend fun createPlaylistSwap(token: String, name: String): Boolean {
+            TODO("Not yet implemented")
+        }
+
         override fun getOAuthUrl(): String {
             return deezerAuthService.getOAuthUrl()
         }

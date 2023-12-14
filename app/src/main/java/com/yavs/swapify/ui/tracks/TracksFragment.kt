@@ -2,6 +2,7 @@ package com.yavs.swapify.ui.tracks
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -21,7 +22,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
 
     private val viewModel by viewModels<TracksViewModel>(extrasProducer = {
         defaultViewModelCreationExtras.withCreationCallback<TracksViewModel.Factory> {
-            it.create(Platform.valueOf(args.fromPlatform),Platform.valueOf(args.toPlatform),args.playlistId)
+            it.create(Platform.valueOf(args.fromPlatform),Platform.valueOf(args.toPlatform),args.playlistId,args.playlistName)
         }
     })
 
@@ -33,8 +34,18 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
 
         viewModel.tracks.observe(viewLifecycleOwner){
             val recyclerView = view.findViewById<RecyclerView>(R.id.tracksRecycler)
+            view.findViewById<Button>(R.id.tracksConfirm).isEnabled = it.isNotEmpty()
 
-            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) {}
+            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) {
+
+                val trackIds = mutableListOf<String>()
+                for(track in viewModel.tracks.value!!)
+                {
+                    trackIds.add(track.id)
+                }
+                view.findViewById<Button>(R.id.tracksConfirm).isEnabled = trackIds.isNotEmpty()
+
+            }
         }
 
         view.findViewById<TextView>(R.id.selectTracksTextView).text= getString(R.string.what_we_found_on, args.toPlatform)
@@ -43,6 +54,14 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
                 args.fromPlatform,
                 args.toPlatform
             ))
+        }
+
+        view.findViewById<Button>(R.id.tracksConfirm).setOnClickListener{
+            viewModel.createPlaylistSwap()
+        }
+        viewModel.playlistCreated.observe(viewLifecycleOwner){
+            if(it)findNavController().navigate(TracksFragmentDirections.actionTracksFragmentToSwapFragment2())
+            else println("Error")
         }
 
 

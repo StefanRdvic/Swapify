@@ -28,10 +28,11 @@ data class SpotifyTrack(
     )
 
     fun toTrack() = Track(
+        id = id,
         title = name,
         duration = durationMs,
         artistName = artists.getOrElse(0) { Artist() }.name,
-        image = album.images.getOrNull(2)?.url, //Send 64,64 image
+        image = album.images.getOrNull(1)?.url, //Send 64,64 image
         preview = previewUrl
     )
 }

@@ -41,6 +41,10 @@ class SpotifyAuthService : PlatformService {
         throw NotImplementedError()
     }
 
+    override suspend fun createPlaylistSwap(token: String, name: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
     override fun getOAuthUrl(): String {
         val scope = "playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private user-read-private"
         return "${Constants.Spotify.AUTH_URL}/authorize?client_id=${Constants.Spotify.APP_ID}&response_type=code&redirect_uri=${Constants.Spotify.REDIRECT_URL}&scope=$scope&show_dialog=true"
