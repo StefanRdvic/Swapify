@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yavs.swapify.data.model.User
-import com.yavs.swapify.data.repository.SharedPreferencesRepository
+import com.yavs.swapify.data.repository.TokenRepository
 import com.yavs.swapify.service.PlatformService
 import com.yavs.swapify.utils.Platform
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val services: Map<String, @JvmSuppressWildcards PlatformService>,
-    private val sharedPreferencesRepository: SharedPreferencesRepository
+    private val tokenRepository: TokenRepository
 ) : ViewModel() {
 
     val fetchedUsers = MutableLiveData<MutableList<User>>()
@@ -31,8 +31,8 @@ class SettingsViewModel @Inject constructor(
     private fun syncUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             fetchedUsers.postValue(Platform.entries.map {
-                sharedPreferencesRepository.getString(it.name)?.let {token ->
-                    services[it.name.lowercase()]?.getUser(token)
+                tokenRepository.get(it)?.let { token ->
+                    services[it.name.lowercase()]?.getUser(token.access)
                 } ?: User(platform = it)
             }.toMutableList())
         }
@@ -45,7 +45,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun disconnect(platform: Platform) {
-        sharedPreferencesRepository.remove(platform.name)
+        tokenRepository.remove(platform)
     }
 
 }

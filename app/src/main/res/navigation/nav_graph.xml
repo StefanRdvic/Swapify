@@ -4,8 +4,8 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/swapFragment">
 
-    <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.ui.swap.SwapFragment" android:label="fragment_swap"
-              tools:layout="@layout/fragment_swap">
+    <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.ui.swap.MainFragment" android:label="fragment_swap"
+              tools:layout="@layout/main_swap">
         <action android:id="@+id/action_swapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
         <action android:id="@+id/action_swapFragment_to_playlistFragment" app:destination="@id/playlistsFragment"/>
     </fragment>
@@ -21,16 +21,15 @@
         tools:layout="@layout/fragment_loading" >
         <deepLink app:uri="yavs.swapify" app:action="android.intent.action.VIEW" app:mimeType="application/json"/>
         <action
-            android:id="@+id/action_loadingFragment_to_swapFragment"
-            app:destination="@id/swapFragment" />
-        <action
             android:id="@+id/action_loadingFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment android:id="@+id/playlistsFragment" android:name="com.yavs.swapify.ui.playlists.PlaylistsFragment"
               android:label="PlaylistsFragment" tools:layout="@layout/fragment_playlist">
-        <action android:id="@+id/action_playlistFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
         <argument android:name="fromPlatform" app:argType="string"/>
         <argument android:name="toPlatform" app:argType="string"/>
+        <action
+            android:id="@+id/action_playlistsFragment_to_swapFragment"
+            app:destination="@id/swapFragment" />
     </fragment>
 </navigation>
