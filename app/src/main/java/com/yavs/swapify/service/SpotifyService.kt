@@ -5,6 +5,7 @@ import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
 import com.yavs.swapify.data.model.spotify.SpotifyUser
 import com.yavs.swapify.data.model.spotify.SpotifyPlaylist
+import com.yavs.swapify.data.model.spotify.SpotifyTrack
 import com.yavs.swapify.service.authService.SpotifyAuthService
 import com.yavs.swapify.utils.Constants
 import com.yavs.swapify.utils.Platform
@@ -34,11 +35,14 @@ class SpotifyService  @Inject constructor() : PlatformService {
             @Header("Authorization") authorization: String
         ): Response<Wrapper<List<SpotifyPlaylist>>>
 
-        @GET("search/track")
+        @GET("v1/search?")
         suspend fun searchTrack(
-            @Query("q") query: String,
+            @Query("q") title: String,
+            @Query("type")type:String,
+            @Query("limit")limit:Int,
+            @Query("include_external")includeExternal:String,
             @Header("Authorization")authorization:String
-        ): Response<List<Track>>
+        ): Response<Wrapper<SpotifyTrack>>
 
         @GET
         suspend fun getTracks(
@@ -63,8 +67,14 @@ class SpotifyService  @Inject constructor() : PlatformService {
 
     }
 
-    override suspend fun searchTrack(title: String, artist: String): List<Track> {
-        TODO("Not yet implemented")
+    override suspend fun searchTrack(title: String, artist: String,token:String): Track {
+        val response = spotifyApi.searchTrack(
+        "$title $artist","track",
+        1,"audio",
+        "Bearer $token")
+        return (if(response.isSuccessful) { println(response.body()!!.items.toTrack().artistName); response.body()!!.items.toTrack();}
+        else Track())
+
     }
 
     override fun getOAuthUrl(): String {

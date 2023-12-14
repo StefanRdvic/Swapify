@@ -37,7 +37,7 @@ class DeezerService @Inject constructor() : PlatformService {
             @GET("search/track")
             suspend fun searchTrack(
                 @Query("q") query: String,
-            ): Response<List<Track>>
+            ): Response<Track>
 
             @GET
             suspend fun getTracks(
@@ -61,7 +61,7 @@ class DeezerService @Inject constructor() : PlatformService {
             return (if(response.isSuccessful) response.body()!!.data else emptyList())
         }
 
-        override suspend fun searchTrack(title: String, artist: String): List<Track> {
+        override suspend fun searchTrack(title: String, artist: String,token : String):Track {
             TODO("Not yet implemented")
 
         }

@@ -33,6 +33,7 @@ class PlaylistsViewModel @AssistedInject constructor(
             playlists.postValue(sharedPreferencesRepository.getString(platform.name)?.let { token ->
                 services[platform.name.lowercase()]?.getPlaylists(token)
             }?: emptyList())
+
         }
     }
 

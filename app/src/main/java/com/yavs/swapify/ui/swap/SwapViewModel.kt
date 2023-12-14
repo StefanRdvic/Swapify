@@ -8,7 +8,7 @@
 //import com.yavs.swapify.auth.TokenManager
 //import com.yavs.swapify.ui.settings.SettingsViewModel
 //import com.yavs.swapify.utils.Platform
-
+//
 //class SwapViewModel(private val tokenManager: TokenManager) : ViewModel() {
 //    private var tokens : MutableMap<String, String>? = mutableMapOf<String, String>()
 //    var availablePlateforms = mutableListOf<Platform>()
@@ -33,6 +33,6 @@
 //            }
 //        }
 //    }
-
-
+//
+//
 //}
