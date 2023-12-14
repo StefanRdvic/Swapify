@@ -12,7 +12,7 @@ object Constants {
 
     object Spotify{
         const val APP_ID: String = "a338c974499c4b21a1d151969fa907b4"
-        const val APP_CRED: String = "YTMzOGM5NzQ0OTljNGIyMWExZDE1MTk2OWZhOTA3YjQ6YzdjYTE0NWNiNzk4NGJmMmIwMjgwMTZkNmUyODkyMjg=="
+        const val APP_CRED: String = "YTMzOGM5NzQ0OTljNGIyMWExZDE1MTk2OWZhOTA3YjQ6YzdjYTE0NWNiNzk4NGJmMmIwMjgwMTZkNmUyODkyMjg="
         const val REDIRECT_URL: String = "http://yavs.swapify/spotify"
         const val BASE_URL = "https://api.spotify.com"
         const val AUTH_URL = "https://accounts.spotify.com"

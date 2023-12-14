@@ -4,6 +4,7 @@ import com.yavs.swapify.data.model.Playlist
 import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
 import com.yavs.swapify.data.model.spotify.SpotifyUser
+import com.yavs.swapify.data.model.spotify.SpotifyPlaylist
 import com.yavs.swapify.service.authService.SpotifyAuthService
 import com.yavs.swapify.utils.Constants
 import com.yavs.swapify.utils.Platform
@@ -19,20 +20,24 @@ import javax.inject.Inject
 class SpotifyService  @Inject constructor() : PlatformService {
 
     private val spotifyAuthService: PlatformService = SpotifyAuthService()
+
+    data class Wrapper<T>(val items: T)
+
     interface SpotifyApi{
         @GET("v1/me")
         suspend fun getUser(
             @Header("Authorization") accessToken: String
         ): Response<SpotifyUser>
 
-        @GET("user/me/playlists")
+        @GET("/v1/me/playlists")
         suspend fun getPlaylists(
-            @Query("access_token") accessToken: String
-        ): Response<DeezerService.Wrapper<List<Playlist>>>
+            @Header("Authorization") authorization: String
+        ): Response<Wrapper<List<SpotifyPlaylist>>>
 
         @GET("search/track")
         suspend fun searchTrack(
             @Query("q") query: String,
+            @Header("Authorization")authorization:String
         ): Response<List<Track>>
 
         @GET
@@ -48,13 +53,14 @@ class SpotifyService  @Inject constructor() : PlatformService {
 
     override suspend fun getUser(token: String): User {
         val response = spotifyApi.getUser("Bearer $token")
-
         return if (response.isSuccessful) response.body()!!
             .toUser().also { it.isInit = true } else User(platform = Platform.Spotify)
     }
 
     override suspend fun getPlaylists(token: String): List<Playlist> {
-        TODO("Not yet implemented")
+        val response = spotifyApi.getPlaylists("Bearer $token")
+        return (if(response.isSuccessful) response.body()!!.items.map { it.toPlaylist() } else emptyList())
+
     }
 
     override suspend fun searchTrack(title: String, artist: String): List<Track> {

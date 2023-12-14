@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Playlist(
-    val id: Long,
+    val id: String,
     val title: String,
     val link: String,
     val picture:String,
-    val creator: User,
+    val creator: User = User(),
     @SerializedName(value="nbTracks", alternate= ["nb_tracks"])
-    val nbTracks: Int
+    val nbTracks: Long
 )
