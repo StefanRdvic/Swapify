@@ -40,7 +40,7 @@ class SpotifyAuthService : PlatformService {
 
     override fun getOAuthUrl(): String {
         val scope = "playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private user-read-private"
-        return "${Constants.Spotify.AUTH_URL}/authorize?client_id=${Constants.Spotify.APP_ID}&response_type=code&redirect_uri=${Constants.Spotify.REDIRECT_URL}&scope=$scope"
+        return "${Constants.Spotify.AUTH_URL}/authorize?client_id=${Constants.Spotify.APP_ID}&response_type=code&redirect_uri=${Constants.Spotify.REDIRECT_URL}&scope=$scope&show_dialog=true"
     }
 
     override suspend fun getOAuthToken(code: String): String {

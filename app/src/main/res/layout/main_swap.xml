@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg_color"
-    tools:context=".ui.swap.SwapFragment">
+    tools:context=".ui.swap.MainFragment">
 
     <Spinner
         android:id="@+id/fromSpinner"
@@ -70,14 +70,14 @@
         android:layout_height="69dp"
         android:background="@drawable/button_background"
         android:text="@string/go"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/primary_text_disabled"
         android:textSize="25sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSpinner"
-        app:layout_constraintVertical_bias="0.618" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.885" />
 
     <ImageButton
         android:id="@+id/settingsButton"

@@ -20,17 +20,22 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="35dp" android:id="@+id/playlistName"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
             android:layout_marginStart="25dp" app:layout_constraintStart_toEndOf="@+id/playlistImage"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="40dp" android:textSize="16sp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp" android:id="@+id/playlistCreator"
             android:textSize="12sp" android:layout_marginTop="5dp"
+            android:textColor="@color/secondary_text"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/playlistName" android:layout_marginStart="25dp"
             app:layout_constraintStart_toEndOf="@+id/playlistImage"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="60dp"
+            android:textColor="@color/secondary_text"
             android:layout_marginEnd="30dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:gravity="center_horizontal|center_vertical"
             android:layout_marginTop="40dp" android:id="@+id/playlistNbTracks"/>

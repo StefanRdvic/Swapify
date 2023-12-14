@@ -12,7 +12,7 @@
     <item>
         <shape android:shape="oval">
             <stroke android:width="3dp" android:color="#282733"/>
-            <solid android:color="#19191C"/>
+            <solid android:color="@color/secondary_bg_color"/>
         </shape>
     </item>
 

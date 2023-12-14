@@ -1,6 +1,5 @@
 package com.yavs.swapify.ui.playlists
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.yavs.swapify.data.model.Playlist
 
 class PlaylistsAdapter(
     private val playlists: List<Playlist>,
+    private val colorSelector: (id: Int) -> Int,
     private val onSelection: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
 
@@ -55,7 +55,10 @@ class PlaylistsAdapter(
     override fun onBindViewHolder(holder: PlaylistsViewHolder, position: Int) {
         if (position == RecyclerView.NO_POSITION) return
         holder.onBind(playlists[position])
-        holder.itemView.setBackgroundColor(if(selected==position) Color.GRAY else Color.WHITE)
+        holder.itemView.setBackgroundColor(
+            if(selected == position) colorSelector(R.color.secondary_bg_color)
+            else colorSelector(R.color.main_bg_color)
+        )
     }
     override fun getItemCount() = playlists.size
 }

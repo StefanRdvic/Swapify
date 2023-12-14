@@ -5,7 +5,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yavs.swapify.data.repository.SharedPreferencesRepository
+import com.yavs.swapify.data.model.Token
+import com.yavs.swapify.data.repository.TokenRepository
 import com.yavs.swapify.service.PlatformService
 import com.yavs.swapify.utils.Platform
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,13 +14,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 
 @HiltViewModel
 class LoadingViewModel @Inject constructor(
     private val services: Map<String, @JvmSuppressWildcards PlatformService>,
-    private val sharedPreferencesRepository: SharedPreferencesRepository
+    private val tokenRepository: TokenRepository
 
 ) : ViewModel() {
 
@@ -41,7 +43,9 @@ class LoadingViewModel @Inject constructor(
                             k to v
                         }
 
-                        sharedPreferencesRepository.putString(Platform.Deezer.name, queryParams["access_token"]!!)
+                        val token = Token(queryParams["access_token"]!!)
+
+                        tokenRepository.save(Platform.Deezer, token)
                     } catch (e: Exception) {
                         // todo : create a status object to handle errors
                         withContext(Dispatchers.Main) {
@@ -59,11 +63,16 @@ class LoadingViewModel @Inject constructor(
                     try {
                         val res = services[Platform.Spotify.name.lowercase()]!!.getOAuthToken(
                             data.getQueryParameter("code")!!
+                        ).let { JSONObject(it) }
+
+                        val token = Token(
+                            res.getString("access_token"),
+                            LocalDateTime
+                                .now()
+                                .plusSeconds(res.getLong("expires_in"))
                         )
-                        val jresponse = JSONObject(res)
-                        val token = jresponse.getString("access_token")
-                        Log.i("d",token)
-                        sharedPreferencesRepository.putString(Platform.Spotify.name, token)
+
+                        tokenRepository.save(Platform.Spotify, token)
                     } catch (e: Exception) {
                         // todo : create a status object to handle errors
                         withContext(Dispatchers.Main) {
