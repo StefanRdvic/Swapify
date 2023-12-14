@@ -69,10 +69,10 @@ class DeezerService @Inject constructor() : PlatformService {
             return (if(response.isSuccessful) response.body()!!.data.map { it.toPlaylist() } else emptyList())
         }
 
-    override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
-        val response = deezerApi.getPlaylistTracks(playlistId)
-        return (if(response.isSuccessful) response.body()!!.data.map { it.toTrack() } else emptyList())
-    }
+        override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
+            val response = deezerApi.getPlaylistTracks(playlistId)
+            return (if(response.isSuccessful) response.body()!!.data.map { it.toTrack() } else emptyList())
+        }
 
         override suspend fun searchTrack(title: String, artist: String,token : String):Track? {
             val response = deezerApi.searchTrack("artist:\"$artist\" track:\"$title\"")

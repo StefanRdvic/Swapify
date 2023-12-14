@@ -41,7 +41,6 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             app:fabCustomSize="60dp"
-            android:background="@drawable/button_background"
             android:src="@drawable/baseline_play_arrow_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="30dp"

@@ -12,6 +12,8 @@ data class SpotifyTrack(
     val uri: String,
     @SerializedName(value="durationMs", alternate = ["duration_ms"])
     val durationMs: Long,
+    @SerializedName("preview_url")
+    val previewUrl: String
 ) {
     inner class Album(
         val images: List<Image>
@@ -25,10 +27,11 @@ data class SpotifyTrack(
         val url: String
     )
 
-fun toTrack() = Track(
-    title = name,
-    duration = durationMs,
-    artistName = artists.getOrElse(0) { Artist() }.name,
-    image = album.images.getOrNull(2)?.url //Send 64,64 image
+    fun toTrack() = Track(
+        title = name,
+        duration = durationMs,
+        artistName = artists.getOrElse(0) { Artist() }.name,
+        image = album.images.getOrNull(2)?.url, //Send 64,64 image
+        preview = previewUrl
     )
 }

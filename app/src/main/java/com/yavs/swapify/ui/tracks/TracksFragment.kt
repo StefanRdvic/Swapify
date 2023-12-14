@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,7 +34,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
         viewModel.tracks.observe(viewLifecycleOwner){
             val recyclerView = view.findViewById<RecyclerView>(R.id.tracksRecycler)
 
-            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {0}) {}
+            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) {}
         }
 
         view.findViewById<TextView>(R.id.selectTracksTextView).text= getString(R.string.what_we_found_on, args.toPlatform)

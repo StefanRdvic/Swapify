@@ -5,7 +5,7 @@ import com.yavs.swapify.data.model.Track
 
 data class DeezerTrack (
     val title: String = "",
-    val image: String = "",
+    val album: Album,
     val duration: Long = 0,
     @SerializedName("artist")
     val artist : Artist?,
@@ -14,9 +14,13 @@ data class DeezerTrack (
     inner class Artist(
         val name: String
     )
+
+    inner class Album (
+        val cover: String
+    )
     fun toTrack() = Track(
         title,
-        image,
+        album.cover,
         duration,
         artist?.name?:"",
         preview

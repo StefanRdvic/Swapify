@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,6 +51,7 @@ class TracksAdapter(
                 mediaPlayer.setOnPreparedListener{ onPrepared() }
                 mediaPlayer.setOnCompletionListener { player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_play_arrow_24)) }
             } catch (_: Exception) {
+                Toast.makeText(itemView.context,"no preview", Toast.LENGTH_SHORT).show()
             }
 
             name.text = track.title
@@ -84,11 +86,7 @@ class TracksAdapter(
         if (position == RecyclerView.NO_POSITION) return
         holder.onBind(track = tracks[position])
         holder.itemView.setBackgroundColor(
-            if(selected.any{it==position}) {
-                colorSelector(R.color.main_bg_color)
-                Log.i("main",position.toString())
-            }
-            else colorSelector(R.color.secondary_bg_color)
+            if(selected.any{it==position}) colorSelector(R.color.secondary_bg_color)else colorSelector(R.color.main_bg_color)
         )
     }
     override fun getItemCount() = tracks.size

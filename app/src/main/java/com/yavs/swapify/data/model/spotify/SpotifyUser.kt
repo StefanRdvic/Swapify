@@ -12,7 +12,7 @@ data class SpotifyUser(
     val images: List<Image>,
     val product: String,
     val type: String,
-    val uri: String,
+    val uri: String
 ){
 
     inner class Image(

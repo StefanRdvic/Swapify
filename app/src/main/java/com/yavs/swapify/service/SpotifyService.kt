@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Inject
 
@@ -43,6 +44,11 @@ class SpotifyService  @Inject constructor() : PlatformService {
             @Query("limit")limit:Int,
             @Query("include_external")includeExternal:String
         ): Response<Search<List<SpotifyTrack>>>
+
+        @GET("v1/playlists/{id}/tracks")
+        suspend fun getPlaylistTracks(
+            @Path("id") id:String
+        ): Response<Wrapper<List<SpotifyTrack>>>
     }
 
     private val spotifyApi = Retrofit.Builder()
@@ -63,7 +69,8 @@ class SpotifyService  @Inject constructor() : PlatformService {
     }
 
     override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
-        TODO("Not yet implemented")
+        val response = spotifyApi.getPlaylistTracks("Bearer $token")
+        return (if(response.isSuccessful) response.body()!!.items.map { it.toTrack() } else emptyList())
     }
 
     override suspend fun searchTrack(title: String, artist: String,token:String): Track? {
