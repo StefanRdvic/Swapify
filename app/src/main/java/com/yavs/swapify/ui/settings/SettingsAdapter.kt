@@ -53,7 +53,7 @@ class SettingsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (users[position].name!==null) 1 else 2
+        return if (users[position].isInit == true) 1 else 2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -8,5 +8,6 @@ data class User(
     val lastName: String?="",
     val link: String?="",
     val picture: String?="",
-    var platform: Platform?=null
+    var platform: Platform?=null,
+    var isInit: Boolean?=false
 )

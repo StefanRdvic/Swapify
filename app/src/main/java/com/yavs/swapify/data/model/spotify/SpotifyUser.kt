@@ -19,7 +19,12 @@ data class SpotifyUser(
         val url: String=""
     )
 
-    fun toUser() = User(name=displayName, link = uri, picture = images.getOrElse(0){Image()}.url, platform = Platform.Spotify)
+    fun toUser() = User(
+        name=displayName,
+        link = uri,
+        picture = images.getOrElse(0){Image()}.url,
+        platform = Platform.Spotify
+    )
 }
 
 

@@ -50,9 +50,9 @@ class DeezerService @Inject constructor() : PlatformService {
         override suspend fun getUser(token: String): User {
             val response = deezerApi.getUser(token)
 
-            return (if(response.isSuccessful) response.body()!!  else User()).also {
-                it.platform = Platform.Deezer
-            }
+            val user = if(response.isSuccessful) response.body()!!.also { it.isInit = true } else User()
+
+            return user.also { it.platform = Platform.Deezer }
         }
 
         override suspend fun getPlaylists(token: String): List<Playlist> {
