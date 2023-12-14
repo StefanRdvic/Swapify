@@ -50,7 +50,7 @@ class SpotifyService  @Inject constructor() : PlatformService {
         val response = spotifyApi.getUser("Bearer $token")
 
         return if (response.isSuccessful) response.body()!!
-            .toUser() else User(platform = Platform.Spotify)
+            .toUser().also { it.isInit = true } else User(platform = Platform.Spotify)
     }
 
     override suspend fun getPlaylists(token: String): List<Playlist> {
