@@ -30,6 +30,7 @@ class TracksViewModel @AssistedInject constructor(
     init {
         searchPlaylistTracks()
     }
+
     private fun searchPlaylistTracks(){
         viewModelScope.launch(Dispatchers.IO) {
             val list = tokenRepository.get(from)?.let { services[from.name.lowercase()]?.getPlaylistTracks(it.access,playlistId) } ?: emptyList()

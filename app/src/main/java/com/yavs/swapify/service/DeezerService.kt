@@ -5,6 +5,7 @@ import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.data.model.User
 import com.yavs.swapify.data.model.deezer.DeezerPlaylist
 import com.yavs.swapify.data.model.deezer.DeezerTrack
+import com.yavs.swapify.service.authService.AuthService
 import com.yavs.swapify.service.authService.DeezerAuthService
 import com.yavs.swapify.utils.Constants
 import com.yavs.swapify.utils.Platform
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 
 class DeezerService @Inject constructor() : PlatformService {
-        private val deezerAuthService: PlatformService = DeezerAuthService() //delegation
+        private val deezerAuthService: AuthService = DeezerAuthService() //delegation
         private val deezerApi = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.Deezer.BASE_URL).build().create(DeeezerApi:: class.java)

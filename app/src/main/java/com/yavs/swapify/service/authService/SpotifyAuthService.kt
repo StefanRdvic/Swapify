@@ -1,15 +1,11 @@
 package com.yavs.swapify.service.authService
 
-import com.yavs.swapify.data.model.Playlist
-import com.yavs.swapify.data.model.Track
-import com.yavs.swapify.data.model.User
-import com.yavs.swapify.service.PlatformService
 import com.yavs.swapify.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-class SpotifyAuthService : PlatformService {
+class SpotifyAuthService : AuthService {
     interface SpotifyAuthApi{
         @Headers("content-type: application/x-www-form-urlencoded")
         @FormUrlEncoded
@@ -22,28 +18,9 @@ class SpotifyAuthService : PlatformService {
         ): String
     }
 
-
     private val authService = Retrofit.Builder()
         .addConverterFactory(ScalarsConverterFactory.create())
         .baseUrl(Constants.Spotify.AUTH_URL).build().create(SpotifyAuthApi::class.java)
-    override suspend fun getUser(token: String): User {
-        throw NotImplementedError()
-    }
-
-    override suspend fun getPlaylists(token: String): List<Playlist> {
-        throw NotImplementedError()
-    }
-    override suspend fun getPlaylistTracks(token: String, playlistId: String): List<Track> {
-        throw NotImplementedError()
-    }
-
-    override suspend fun createPlaylistSwap(token: String, name: String, tracks: List<Track>): Boolean {
-        throw NotImplementedError()
-    }
-
-    override suspend fun searchTrack(title: String, artist: String,token : String): Track {
-        throw NotImplementedError()
-    }
 
     override fun getOAuthUrl(): String {
         val scope = "playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private user-read-private"

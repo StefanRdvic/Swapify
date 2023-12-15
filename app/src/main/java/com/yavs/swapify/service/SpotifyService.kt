@@ -6,6 +6,7 @@ import com.yavs.swapify.data.model.User
 import com.yavs.swapify.data.model.spotify.SpotifyPlaylist
 import com.yavs.swapify.data.model.spotify.SpotifyTrack
 import com.yavs.swapify.data.model.spotify.SpotifyUser
+import com.yavs.swapify.service.authService.AuthService
 import com.yavs.swapify.service.authService.SpotifyAuthService
 import com.yavs.swapify.utils.Constants
 import com.yavs.swapify.utils.Platform
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 class SpotifyService  @Inject constructor() : PlatformService {
 
-    private val spotifyAuthService: PlatformService = SpotifyAuthService()
+    private val spotifyAuthService: AuthService = SpotifyAuthService()
 
     data class Wrapper<T>(val items: T)
     data class TrackWrapper<T>(val track: T?)

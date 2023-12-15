@@ -2,7 +2,6 @@ package com.yavs.swapify.ui.tracks
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +35,6 @@ class TracksAdapter(
             itemView.setOnClickListener {
                 if( selected.any{ it == adapterPosition} ) selected.removeIf{it==adapterPosition} else selected.add(adapterPosition)
                 notifyItemChanged(adapterPosition)
-                Log.i("ok",selected.toString())
                 onSelection(selected)
             }
             mediaPlayer.setAudioAttributes(AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
@@ -55,6 +53,7 @@ class TracksAdapter(
                 mediaPlayer.reset()
             }
             player.setOnClickListener{
+                player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_do_not_disturb_24))
                 Toast.makeText(itemView.context,"no preview for ${track.title}", Toast.LENGTH_SHORT).show()
             }
 
