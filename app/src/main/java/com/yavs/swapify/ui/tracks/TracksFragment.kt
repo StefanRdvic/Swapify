@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.yavs.swapify.R
+import com.yavs.swapify.data.model.Track
 import com.yavs.swapify.utils.Platform
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
@@ -20,6 +22,8 @@ import dagger.hilt.android.lifecycle.withCreationCallback
 class TracksFragment : Fragment(R.layout.fragment_tracks) {
     private val args: TracksFragmentArgs by navArgs()
 
+    private var tracks = mutableListOf<Track>()
+    private var allTracks = mutableListOf<Track>()
     private val viewModel by viewModels<TracksViewModel>(extrasProducer = {
         defaultViewModelCreationExtras.withCreationCallback<TracksViewModel.Factory> {
             it.create(Platform.valueOf(args.fromPlatform),Platform.valueOf(args.toPlatform),args.playlistId,args.playlistName)
@@ -33,18 +37,12 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
         recyclerView.adapter = TracksAdapter(mutableListOf(), colorSelector = {0}) {}
 
         viewModel.tracks.observe(viewLifecycleOwner){
-            val recyclerView = view.findViewById<RecyclerView>(R.id.tracksRecycler)
             view.findViewById<Button>(R.id.tracksConfirm).isEnabled = it.isNotEmpty()
-
-            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) {
-
-                val trackIds = mutableListOf<String>()
-                for(track in viewModel.tracks.value!!)
-                {
-                    trackIds.add(track.id)
-                }
-                view.findViewById<Button>(R.id.tracksConfirm).isEnabled = trackIds.isNotEmpty()
-
+            allTracks = it.toMutableList()
+            tracks = allTracks
+            recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) { selected ->
+                tracks = selected.map{pos -> allTracks[pos] }.toMutableList()
+                view.findViewById<Button>(R.id.tracksConfirm).isEnabled = tracks.isNotEmpty()
             }
         }
 
@@ -57,10 +55,13 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
         }
 
         view.findViewById<Button>(R.id.tracksConfirm).setOnClickListener{
-            viewModel.createPlaylistSwap()
+            viewModel.createPlaylistSwap(tracks)
         }
         viewModel.playlistCreated.observe(viewLifecycleOwner){
-            if(it)findNavController().navigate(TracksFragmentDirections.actionTracksFragmentToSwapFragment2())
+            if(it){
+                Toast.makeText(view.context,"Succesfully added playlist ${args.playlistName}",Toast.LENGTH_LONG).show()
+                findNavController().navigate(TracksFragmentDirections.actionTracksFragmentToSwapFragment2())
+            }
             else println("Error")
         }
 

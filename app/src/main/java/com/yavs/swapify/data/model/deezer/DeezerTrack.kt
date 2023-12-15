@@ -10,7 +10,8 @@ data class DeezerTrack (
     val duration: Long = 0,
     @SerializedName("artist")
     val artist : Artist?,
-    val preview: String = ""
+    val preview: String = "",
+    val link: String = ""
 ){
     inner class Artist(
         val name: String
@@ -25,6 +26,7 @@ data class DeezerTrack (
         album.cover,
         duration,
         artist?.name?:"",
-        preview
+        preview,
+        link
     )
 }

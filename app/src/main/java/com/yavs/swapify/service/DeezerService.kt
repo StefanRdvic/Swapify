@@ -12,9 +12,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.Url
 import javax.inject.Inject
 
 
@@ -47,10 +47,18 @@ class DeezerService @Inject constructor() : PlatformService {
                 @Query("q") query: String,
             ): Response<Wrapper<List<DeezerTrack>>>
 
-            @GET
-            suspend fun getTracks(
-                @Url url: String
-            ): Response<Wrapper<List<Track>>>
+            @POST("user/me/playlists")
+            suspend fun createPlaylist(
+                @Query("access_token") accessToken: String,
+                @Query("title") name: String
+            ): Response<DeezerPlaylist>
+
+            @POST("playlist/{id}/tracks")
+            suspend fun addTracks(
+                @Path("id") playlistId: String,
+                @Query("access_token") accessToken: String,
+                @Query("songs") songs: String,
+            ): Response<Any>
         }
 
 
@@ -79,8 +87,11 @@ class DeezerService @Inject constructor() : PlatformService {
             return (if(response.isSuccessful) response.body()?.data?.map{ it.toTrack() }?.getOrNull(0) else null)
         }
 
-        override suspend fun createPlaylistSwap(token: String, name: String): Boolean {
-            TODO("Not yet implemented")
+        override suspend fun createPlaylistSwap(token: String, name: String, tracks: List<Track>): Boolean {
+            val response = deezerApi.createPlaylist(token,name)
+            val id = if(response.isSuccessful) response.body()?.id.toString() else return false
+            val trackResponse = deezerApi.addTracks(id,token,tracks.joinToString { it.id })
+            return trackResponse.isSuccessful
         }
 
         override fun getOAuthUrl(): String {

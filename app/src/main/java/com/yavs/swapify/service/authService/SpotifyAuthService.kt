@@ -37,12 +37,12 @@ class SpotifyAuthService : PlatformService {
         throw NotImplementedError()
     }
 
-    override suspend fun searchTrack(title: String, artist: String,token : String): Track {
+    override suspend fun createPlaylistSwap(token: String, name: String, tracks: List<Track>): Boolean {
         throw NotImplementedError()
     }
 
-    override suspend fun createPlaylistSwap(token: String, name: String): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun searchTrack(title: String, artist: String,token : String): Track {
+        throw NotImplementedError()
     }
 
     override fun getOAuthUrl(): String {

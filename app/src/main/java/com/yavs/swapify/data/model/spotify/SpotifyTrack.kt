@@ -33,6 +33,7 @@ data class SpotifyTrack(
         duration = durationMs,
         artistName = artists.getOrElse(0) { Artist() }.name,
         image = album.images.getOrNull(1)?.url, //Send 64,64 image
-        preview = previewUrl
+        preview = previewUrl,
+        uri = uri
     )
 }

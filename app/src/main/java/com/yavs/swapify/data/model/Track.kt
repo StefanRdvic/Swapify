@@ -7,4 +7,5 @@ data class Track(
     val duration: Long = 0,
     val artistName : String? = "",
     val preview: String? = "",
+    val uri: String = ""
 )

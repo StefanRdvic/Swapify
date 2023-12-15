@@ -23,7 +23,7 @@ class TracksAdapter(
     private val onSelection: (pos: MutableList<Int>) -> Unit
 ) : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>() {
 
-    private var selected = (0..tracks.size).toMutableList()
+    private var selected = (0..<tracks.size).toMutableList()
 
     inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val picture: ImageView = view.findViewById(R.id.trackImage)

@@ -46,10 +46,10 @@ class TracksViewModel @AssistedInject constructor(
         }
     }
 
-    fun createPlaylistSwap()
+    fun createPlaylistSwap(tracks: List<Track>)
     {
         viewModelScope.launch(Dispatchers.IO) {
-            val isCreated = tokenRepository.get(to)?.let { services[to.name.lowercase()]?.createPlaylistSwap(it.access,playlistName) } ?: false
+            val isCreated = tokenRepository.get(to)?.let { services[to.name.lowercase()]?.createPlaylistSwap(it.access,playlistName,tracks) } ?: false
             playlistCreated.postValue(isCreated)
         }
     }
