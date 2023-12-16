@@ -37,12 +37,12 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
         recyclerView.adapter = TracksAdapter(mutableListOf(), colorSelector = {0}) {}
 
         viewModel.tracks.observe(viewLifecycleOwner){
-            view.findViewById<Button>(R.id.tracksConfirm).isEnabled = it.isNotEmpty()
             allTracks = it.toMutableList()
             tracks = allTracks
+            setConfirm(view)
             recyclerView.adapter = TracksAdapter(it.toMutableList(), colorSelector = {id -> ContextCompat.getColor(requireContext(), id)}) { selected ->
                 tracks = selected.map{pos -> allTracks[pos] }.toMutableList()
-                view.findViewById<Button>(R.id.tracksConfirm).isEnabled = tracks.isNotEmpty()
+                setConfirm(view)
             }
         }
 
@@ -68,6 +68,14 @@ class TracksFragment : Fragment(R.layout.fragment_tracks) {
 
     }
 
-
+    fun setConfirm(view: View){
+        val confirm = view.findViewById<Button>(R.id.tracksConfirm)
+        confirm.isEnabled = tracks.isNotEmpty()
+        confirm.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (tracks.isNotEmpty()) R.color.white else R.color.primary_text_disabled)
+        )
+    }
 
 }
