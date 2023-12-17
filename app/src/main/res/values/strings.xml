@@ -19,5 +19,7 @@
     <string name="select_playlists">Select a playlist</string>
     <string name="what_we_found_on">What we found on %1$s</string>
     <string name="preview">preview</string>
+    <string name="swapify">Swapify</string>
+    <string name="logo">logo</string>
 
 </resources>
