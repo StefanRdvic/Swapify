@@ -80,26 +80,34 @@
         app:layout_constraintVertical_bias="0.885" />
 
     <ImageButton
-        android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/settings_background"
-        android:contentDescription="@string/settings"
-        android:padding="8dp"
-        android:src="@drawable/baseline_settings_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
-
+            android:id="@+id/settingsButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/settings_background"
+            android:contentDescription="@string/settings"
+            android:padding="8dp"
+            android:src="@drawable/baseline_settings_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.068"/>
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="16dp" />
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="32dp"
+            android:contentDescription="@string/logo"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            android:layout_marginStart="28dp" app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp" android:text="@string/swapify"
+            android:textSize="48sp" android:textColor="#009688"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:foregroundGravity="center_vertical|center|center_horizontal"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
