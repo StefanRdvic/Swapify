@@ -7,16 +7,31 @@
     android:background="@color/main_bg_color"
     tools:context=".ui.loading.LoadingFragment">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBarPlaylist2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:indicatorColor="@color/primary_text"
+        app:indicatorSize="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="#0CFFFFFF"
+        app:trackThickness="10dp" />
+
     <TextView
         android:id="@+id/textTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/data_load"
         android:textColor="@color/primary_text"
         android:textSize="30sp"
-        android:text="@string/data_load"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.235" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

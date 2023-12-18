@@ -32,14 +32,14 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             fetchedUsers.postValue(Platform.entries.map {
                 tokenRepository.get(it)?.let { token ->
-                    services[it.name.lowercase()]?.getUser(token.access)
+                    services[it.name]?.getUser(token.access)
                 } ?: User(platform = it)
             }.toMutableList())
         }
     }
 
     fun startOAuthActivity(platform: Platform, startActivity: (Intent) -> Unit) {
-        services[platform.name.lowercase()]?.getOAuthUrl()?.let {
+        services[platform.name]?.getOAuthUrl()?.let {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
         }
     }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.yavs.swapify.R
@@ -13,7 +14,6 @@ import com.yavs.swapify.data.model.Playlist
 
 class PlaylistsAdapter(
     private val playlists: List<Playlist>,
-    private val colorSelector: (id: Int) -> Int,
     private val onSelection: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
 
@@ -27,8 +27,9 @@ class PlaylistsAdapter(
 
         fun onBind(playlist: Playlist) {
             Picasso.get().load(playlist.picture).into(picture)
-            name.text = playlist.title
-            creator.text = "${playlist.creator.name} ${playlist.creator.lastName}"
+            name.text = if(playlist.title.length > 25) "${playlist.title.substring(0, 25)}..." else playlist.title
+            val creatorStr = "${playlist.creator.name} ${playlist.creator.lastName}"
+            creator.text = if(creatorStr.length > 25) "${creatorStr.substring(0, 25)}..." else creatorStr
             nbTracks.text = "${playlist.nbTracks} tracks"
         }
 
@@ -40,7 +41,7 @@ class PlaylistsAdapter(
                 notifyItemChanged(adapterPosition)
                 notifyItemChanged(oldSelected)
                 Log.i("ok", selected.toString())
-                onSelection.invoke(selected)
+                onSelection(selected)
             }
         }
     }
@@ -57,8 +58,10 @@ class PlaylistsAdapter(
         if (position == RecyclerView.NO_POSITION) return
         holder.onBind(playlists[position])
         holder.itemView.setBackgroundColor(
-            if(selected == position) colorSelector(R.color.secondary_bg_color)
-            else colorSelector(R.color.main_bg_color)
+            ContextCompat.getColor(
+                holder.itemView.context,
+                if(selected == position) R.color.secondary_bg_color else R.color.main_bg_color
+            )
         )
     }
     override fun getItemCount() = playlists.size

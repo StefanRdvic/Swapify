@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.main_swap) {
+class MainFragment : Fragment(R.layout.fragment_swap) {
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

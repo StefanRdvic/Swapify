@@ -5,7 +5,7 @@
             app:startDestination="@id/swapFragment">
 
     <fragment android:id="@+id/swapFragment" android:name="com.yavs.swapify.ui.swap.MainFragment" android:label="fragment_swap"
-              tools:layout="@layout/main_swap">
+              tools:layout="@layout/fragment_swap">
         <action android:id="@+id/action_swapFragment_to_settingsFragment" app:destination="@id/settingsFragment"/>
         <action android:id="@+id/action_swapFragment_to_playlistFragment" app:destination="@id/playlistsFragment"/>
     </fragment>
