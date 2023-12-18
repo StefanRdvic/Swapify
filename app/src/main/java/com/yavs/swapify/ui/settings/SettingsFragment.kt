@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.yavs.swapify.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,21 +28,28 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.userRecycler)
+        val progressor = view.findViewById<CircularProgressIndicator>(R.id.progressBarSetting)
+
         recyclerView.adapter = SettingsAdapter(mutableListOf(), onLogOutButtonClick = {}, onLogInButtonClick = {})
 
         viewModel.fetchedUsers.observe(viewLifecycleOwner) {
-            adapter = SettingsAdapter(it,
-                onLogOutButtonClick = { platform ->
-                    viewModel.disconnect(platform)
-                },
-                onLogInButtonClick = { platform ->
-                    viewModel.startOAuthActivity(platform){ intent ->
-                        requireContext().startActivity(intent)
-                    }
-                })
-            recyclerView.swapAdapter(
-                adapter, false
-            )
+            if (it.isEmpty()) {
+                progressor.visibility = View.VISIBLE
+            } else {
+                progressor.visibility = View.GONE
+                adapter = SettingsAdapter(it,
+                    onLogOutButtonClick = { platform ->
+                        viewModel.disconnect(platform)
+                    },
+                    onLogInButtonClick = { platform ->
+                        viewModel.startOAuthActivity(platform){ intent ->
+                            requireContext().startActivity(intent)
+                        }
+                    })
+                recyclerView.swapAdapter(
+                    adapter, false
+                )
+            }
         }
 
         viewModel.userUpdated.observe(viewLifecycleOwner) {

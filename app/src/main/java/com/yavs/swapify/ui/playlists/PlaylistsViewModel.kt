@@ -31,7 +31,7 @@ class PlaylistsViewModel @AssistedInject constructor(
     private fun syncPlaylist(){
         viewModelScope.launch(Dispatchers.IO) {
             playlists.postValue(tokenRepository.get(platform)?.let { token ->
-                    services[platform.name.lowercase()]?.getPlaylists(token.access)
+                    services[platform.name]?.getPlaylists(token.access)
                 }?: emptyList()
             )
         }

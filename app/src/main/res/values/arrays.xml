@@ -4,13 +4,11 @@
     <string-array name="platforms_from">
         <item>Spotify</item>
         <item>Deezer</item>
-        <item>SoundCloud</item>
     </string-array>
 
     <string-array name="platforms_to">
         <item>Deezer</item>
         <item>Spotify</item>
-        <item>SoundCloud</item>
     </string-array>
 
 </resources>

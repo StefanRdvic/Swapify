@@ -36,7 +36,7 @@ class LoadingViewModel @Inject constructor(
             "/deezer" -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     try {
-                        val res = services[Platform.Deezer.name.lowercase()]!!.getOAuthToken(
+                        val res = services[Platform.Deezer.name]!!.getOAuthToken(
                             data.getQueryParameter("code")!!
                         )
                         val queryParams = res.split("&").associate {
@@ -64,7 +64,7 @@ class LoadingViewModel @Inject constructor(
             "/spotify" -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     try {
-                        val res = services[Platform.Spotify.name.lowercase()]!!.getOAuthToken(
+                        val res = services[Platform.Spotify.name]!!.getOAuthToken(
                             data.getQueryParameter("code")!!
                         ).let { JSONObject(it) }
 

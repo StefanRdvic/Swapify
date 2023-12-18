@@ -13,17 +13,20 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.time.LocalDateTime
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides
+    @Singleton
     fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
         return appContext.getSharedPreferences("Swapify", Context.MODE_PRIVATE)
     }
 
     @Provides
+    @Singleton
     fun provideTokenRepository(sharedPreferences: SharedPreferences): TokenRepository {
         return TokenRepository(sharedPreferences,
             GsonBuilder()
@@ -34,5 +37,4 @@ object RepositoryModule {
             .create()
         )
     }
-
 }

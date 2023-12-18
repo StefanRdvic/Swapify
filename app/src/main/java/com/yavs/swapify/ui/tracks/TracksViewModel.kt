@@ -1,6 +1,5 @@
 package com.yavs.swapify.ui.tracks
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +23,7 @@ class TracksViewModel @AssistedInject constructor(
     @Assisted("playlistId") private val playlistId: String,
     @Assisted("playlistName") private val playlistName: String
 ) : ViewModel(){
+
     val tracks = MutableLiveData<List<Track>>()
     val playlistCreated = MutableLiveData<Boolean>()
 
@@ -33,24 +33,26 @@ class TracksViewModel @AssistedInject constructor(
 
     private fun searchPlaylistTracks(){
         viewModelScope.launch(Dispatchers.IO) {
-            val list = tokenRepository.get(from)?.let { services[from.name.lowercase()]?.getPlaylistTracks(it.access,playlistId) } ?: emptyList()
-            val searched = mutableListOf<Track>()
-            for (track in list){
-                val toTrack = tokenRepository.get(to)?.let { services[to.name.lowercase()]?.searchTrack(track.title!!,
-                    track.artistName!!, it.access) }
-                if (toTrack != null) {
-                    searched.add(toTrack)
-                }
-            }
-            Log.i("d",searched.toString())
-            tracks.postValue(searched)
+            tracks.postValue(
+                tokenRepository.get(from)?.let {
+                    services[from.name]?.getPlaylistTracks(it.access, playlistId)
+                }?.mapNotNull { track ->
+                    tokenRepository.get(to)?.let {
+                        services[to.name]?.searchTrack(
+                            track.title!!,
+                            track.artistName!!,
+                            it.access
+                        )
+                    }
+                } ?: emptyList()
+            )
         }
     }
 
     fun createPlaylistSwap(tracks: List<Track>)
     {
         viewModelScope.launch(Dispatchers.IO) {
-            val isCreated = tokenRepository.get(to)?.let { services[to.name.lowercase()]?.createPlaylistSwap(it.access,playlistName,tracks) } ?: false
+            val isCreated = tokenRepository.get(to)?.let { services[to.name]?.createPlaylistSwap(it.access, playlistName,tracks) } ?: false
             playlistCreated.postValue(isCreated)
         }
     }
@@ -59,6 +61,11 @@ class TracksViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(@Assisted("from") from: Platform, @Assisted("to") to: Platform, @Assisted("playlistId")playlistId: String,@Assisted("playlistName")playlistName: String): TracksViewModel
+        fun create(
+            @Assisted("from") from: Platform,
+            @Assisted("to") to: Platform,
+            @Assisted("playlistId") playlistId: String,
+            @Assisted("playlistName") playlistName: String
+        ): TracksViewModel
     }
 }

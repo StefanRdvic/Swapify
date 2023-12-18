@@ -81,33 +81,45 @@
 
     <ImageButton
             android:id="@+id/settingsButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/settings_background"
             android:contentDescription="@string/settings"
             android:padding="8dp"
             android:src="@drawable/baseline_settings_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.068"/>
+            app:layout_constraintVertical_bias="0.05"/>
+
+
     <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="32dp"
-            android:contentDescription="@string/logo"/>
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@+id/fromSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166" />
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView"
-            android:layout_marginStart="28dp" app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp" android:text="@string/swapify"
-            android:textSize="48sp" android:textColor="#009688"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:foregroundGravity="center_vertical|center|center_horizontal"/>
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swapify"
+        android:textColor="@color/secondary_text"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/fromSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

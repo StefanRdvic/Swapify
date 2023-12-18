@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
+import javax.inject.Singleton
 
 
 @Module
@@ -17,11 +18,13 @@ abstract class ServiceModule {
 
     @Binds
     @IntoMap
-    @StringKey("spotify")
+    @StringKey("Spotify")
+    @Singleton
     abstract fun provideSpotifyService(spotifyService: SpotifyService): PlatformService
 
     @Binds
     @IntoMap
-    @StringKey("deezer")
+    @StringKey("Deezer")
+    @Singleton
     abstract fun provideDeezerService(deezerService: DeezerService): PlatformService
 }

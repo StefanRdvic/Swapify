@@ -5,73 +5,70 @@ import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.squareup.picasso.Picasso
 import com.yavs.swapify.R
 import com.yavs.swapify.data.model.Track
 
 
 class TracksAdapter(
-    private val tracks: MutableList<Track>,
-    private val colorSelector: (id: Int) -> Int,
-    private val onSelection: (pos: MutableList<Int>) -> Unit
+    private val tracks: List<Track>,
+    private val onSelection: (pos: Int, selectionType: TracksFragment.SelectionType ) -> Unit
 ) : RecyclerView.Adapter<TracksAdapter.TrackViewHolder>() {
 
-    private var selected = (0..<tracks.size).toMutableList()
+    private var selected = (tracks.indices).toMutableList()
+
 
     inner class TrackViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val picture: ImageView = view.findViewById(R.id.trackImage)
         private val name: TextView = view.findViewById(R.id.trackName)
         private val creator: TextView = view.findViewById(R.id.trackArtist)
-        private val player: FloatingActionButton = view.findViewById(R.id.fabPlayOrPause)
+        private val player: ImageButton = view.findViewById(R.id.playerButton)
         private val mediaPlayer = MediaPlayer()
 
-        init {
-            itemView.setOnClickListener {
-                if( selected.any{ it == adapterPosition} ) selected.removeIf{it==adapterPosition} else selected.add(adapterPosition)
-                notifyItemChanged(adapterPosition)
-                onSelection(selected)
-            }
-            mediaPlayer.setAudioAttributes(AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
-        }
-
         fun onBind(track: Track) {
-            if(track.image.isNullOrBlank()){
-                Picasso.get().load(track.image).into(picture)
-            }
+            player.setImageDrawable(
+                ContextCompat.getDrawable(
+                    itemView.context,
+                    if (mediaPlayer.isPlaying) R.drawable.baseline_pause_24 else R.drawable.baseline_play_arrow_24
+                )
+            )
+
             try {
+                mediaPlayer.setAudioAttributes(AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
                 mediaPlayer.setDataSource(track.preview)
                 mediaPlayer.prepareAsync()
-                mediaPlayer.setOnPreparedListener{ onPrepared() }
-                mediaPlayer.setOnCompletionListener { player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_play_arrow_24)) }
+                mediaPlayer.setOnPreparedListener{ player.isEnabled = true }
             } catch (_: Exception) {
                 mediaPlayer.reset()
             }
-            player.setOnClickListener{
-                player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_do_not_disturb_24))
-                Toast.makeText(itemView.context,"no preview for ${track.title}", Toast.LENGTH_SHORT).show()
-            }
 
-            name.text = track.title
-            creator.text = track.artistName
-        }
 
-        private fun onPrepared() {
-            player.show()
             player.setOnClickListener{
-                if (mediaPlayer.isPlaying){
-                    player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_play_arrow_24))
+                if (mediaPlayer.isPlaying) {
+                    player.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.baseline_play_arrow_24))
                     mediaPlayer.pause()
-                }else{
+                }
+                else{
                     player.setImageDrawable(ContextCompat.getDrawable(itemView.context,R.drawable.baseline_pause_24))
                     mediaPlayer.start()
                 }
             }
+
+            itemView.setOnClickListener {
+                if(selected.removeIf{ it == adapterPosition })
+                    onSelection(adapterPosition, TracksFragment.SelectionType.DESELECTION)
+                else{
+                    selected.add(adapterPosition)
+                    onSelection(adapterPosition, TracksFragment.SelectionType.SELECTION)
+                }
+                mediaPlayer.reset()
+                notifyItemChanged(adapterPosition)
+            }
+
+            name.text = if(track.title != null && track.title.length > 30) "${track.title.substring(0, 30)}..." else track.title
+            creator.text = if(track.artistName != null && track.artistName.length > 30) "${track.artistName.substring(0, 30)}..." + "..." else track.artistName
         }
     }
 
@@ -88,7 +85,10 @@ class TracksAdapter(
         if (position == RecyclerView.NO_POSITION) return
         holder.onBind(track = tracks[position])
         holder.itemView.setBackgroundColor(
-            if(selected.any{it==position}) colorSelector(R.color.secondary_bg_color)else colorSelector(R.color.main_bg_color)
+            ContextCompat.getColor(
+                holder.itemView.context,
+                if(selected.any { it == position }) R.color.secondary_bg_color else R.color.main_bg_color
+            )
         )
     }
     override fun getItemCount() = tracks.size
